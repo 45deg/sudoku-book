@@ -200,7 +200,7 @@ Prologとの違い
 実行する
 ========
 
-サンプルプログラムは ``examples/03-minikanren/`` に実装されています。詳しい実行手順やコマンドラインオプションについては ``examples/03-minikanren/README.md`` を参照してください。
+サンプルプログラムは :repo-dir:`examples/03-minikanren/` に実装されています。詳しい実行手順やコマンドラインオプションについては :repo-file:`examples/03-minikanren/README.md` を参照してください。
 
 一意解の問題
 ------------

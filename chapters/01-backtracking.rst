@@ -186,7 +186,7 @@
 実行する
 ========
 
-サンプルプログラムは ``examples/01-backtracking/solve.py`` に実装されています。詳しい実行手順やコマンドラインオプションについては ``examples/01-backtracking/README.md`` を参照してください。
+サンプルプログラムは :repo-file:`examples/01-backtracking/solve.py` に実装されています。詳しい実行手順やコマンドラインオプションについては :repo-file:`examples/01-backtracking/README.md` を参照してください。
 
 以下では、単純なバックトラック手法（Naive）と候補伝播を組み合わせた手法（propagate）で標準問題を解いた結果を比較します。
 

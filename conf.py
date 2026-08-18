@@ -3,7 +3,7 @@
 project = "数独を解こう"
 language = "ja"
 
-extensions = ["sphinx.ext.mathjax", "sphinxcontrib.bibtex"]
+extensions = ["sphinx.ext.extlinks", "sphinx.ext.mathjax", "sphinxcontrib.bibtex"]
 root_doc = "index"
 source_suffix = {".rst": "restructuredtext"}
 
@@ -12,6 +12,11 @@ bibtex_default_style = "unsrt"
 bibtex_reference_style = "label"
 # Each chapter owns a local bibliography whose numbering intentionally restarts at 1.
 suppress_warnings = ["bibtex.duplicate_label"]
+
+extlinks = {
+    "repo-file": ("https://github.com/45deg/sudoku-book/blob/main/%s", "%s"),
+    "repo-dir": ("https://github.com/45deg/sudoku-book/tree/main/%s", "%s"),
+}
 
 exclude_patterns = [
     ".agents/**",

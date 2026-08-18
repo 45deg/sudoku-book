@@ -256,7 +256,7 @@ MiniSatを呼び出します。
 実行する
 ========
 
-サンプルプログラムは ``examples/06-sat/`` にあります。詳しい実行手順やオプションについては ``examples/06-sat/README.md`` を参照してください。
+サンプルプログラムは :repo-dir:`examples/06-sat/` にあります。詳しい実行手順やオプションについては :repo-file:`examples/06-sat/README.md` を参照してください。
 
 通常問題
 --------

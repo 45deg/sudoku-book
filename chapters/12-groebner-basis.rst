@@ -176,7 +176,7 @@ SymPyの ``solve_poly_system`` に基底を渡し、各変数の値を厳密に�
 実行と検証
 ============
 
-モデルの実行および検証手順については ``examples/15-groebner-basis/README.md`` を参照してください。
+モデルの実行および検証手順については :repo-file:`examples/15-groebner-basis/README.md` を参照してください。
 
 通常問題
 --------

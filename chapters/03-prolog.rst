@@ -195,7 +195,7 @@ SWI-Prologには、整数の範囲を表す ``ins/2``、重複を禁じる ``all
 逆向きに実行することはできません。論理変数を使うプログラムであっても、双方向に実行できる
 かどうかは実装依存です。
 
-完全なコードは ``examples/02-prolog/solve.pl`` にあります。詳しい実行手順やコマンドラインオプションについては ``examples/02-prolog/README.md`` を参照してください。
+完全なコードは :repo-file:`examples/02-prolog/solve.pl` にあります。詳しい実行手順やコマンドラインオプションについては :repo-file:`examples/02-prolog/README.md` を参照してください。
 
 実行結果
 ========

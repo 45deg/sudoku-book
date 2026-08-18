@@ -163,7 +163,7 @@ Exact Cover表の条件列には、次の四種類の条件を置きます。そ
 実行する
 ========
 
-完全なコードは ``examples/05-exact-cover/solve.py`` にあります。詳しい実行手順やオプションについては ``examples/05-exact-cover/README.md`` を参照してください。
+完全なコードは :repo-file:`examples/05-exact-cover/solve.py` にあります。詳しい実行手順やオプションについては :repo-file:`examples/05-exact-cover/README.md` を参照してください。
 
 ``candidate rows`` は初期配置を反映した候補行数、``constraint columns`` は満たすべき列数です。
 ``nodes`` は探索関数の呼び出し回数、``branches`` は選んで試した行の数、``dead ends`` は候補行が

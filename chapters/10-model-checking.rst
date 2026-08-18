@@ -172,7 +172,7 @@ BMCでは、任意に決めた深さまで反例がなかっただけで、一�
 実行と検証
 ============
 
-実行手順とオプションは ``examples/11-model-checking/README.md`` にまとめています。``checks`` は
+実行手順とオプションは :repo-file:`examples/11-model-checking/README.md` にまとめています。``checks`` は
 nuXmvへ問い合わせた回数です。最初の検査で解を探し、解が得られた場合だけ、その完成盤面を除外した
 二回目の検査で一意性を調べます。
 

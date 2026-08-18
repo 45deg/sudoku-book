@@ -168,7 +168,7 @@ loopy belief propagationと呼びます。メッセージが収束する保証�
 実行と検証
 ============
 
-実行手順とオプションは ``examples/14-factor-graph/README.md`` にまとめています。同じ一意解問題を
+実行手順とオプションは :repo-file:`examples/14-factor-graph/README.md` にまとめています。同じ一意解問題を
 sum-productとmax-productで解き、複数解問題と矛盾問題をsum-productで調べた結果は次のとおりです。
 
 .. list-table:: belief propagationを実行した結果

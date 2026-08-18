@@ -155,7 +155,7 @@ MiniZincは複数方式のソルバーへ接続できますが、この章の実
 実行と検証
 ============
 
-実行手順とオプションは ``examples/04-constraint-programming/README.md`` にまとめています。
+実行手順とオプションは :repo-file:`examples/04-constraint-programming/README.md` にまとめています。
 三つの入力を最大二解まで探索した結果は次のとおりです。
 
 .. list-table:: Gecodeで三つの盤面を調べた結果

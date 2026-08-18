@@ -173,7 +173,7 @@ HiGHSのモデル状態には最適、実行不能、制限到達などが独立
 実行と検証
 ============
 
-実行手順とオプションは ``examples/08-integer-programming/README.md`` にまとめています。
+実行手順とオプションは :repo-file:`examples/08-integer-programming/README.md` にまとめています。
 最初の解を得た後にno-good制約を加え、最大二解まで探した結果は次のとおりです。
 
 .. list-table:: HiGHSで三つの盤面を調べた結果
