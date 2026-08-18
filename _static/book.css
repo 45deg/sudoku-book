@@ -1,0 +1,258 @@
+/* Reading-focused adjustments on top of the Furo theme. */
+
+html {
+  scroll-padding-top: 1rem;
+}
+
+body {
+  font-kerning: normal;
+  overflow-wrap: anywhere;
+}
+
+.content {
+  line-height: 1.9;
+}
+
+.article-container {
+  max-width: 50rem;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+  line-height: 1.45;
+  scroll-margin-top: 1rem;
+}
+
+.content h1 {
+  font-size: clamp(1.8rem, 4vw, 2.45rem);
+  letter-spacing: 0.01em;
+}
+
+.content h2 {
+  border-bottom: 1px solid var(--color-background-border);
+  margin-top: 2.6em;
+  padding-bottom: 0.3em;
+}
+
+.content h3 {
+  margin-top: 2.2em;
+}
+
+.content p,
+.content li,
+.content dd {
+  max-width: 46rem;
+}
+
+.content a {
+  text-underline-offset: 0.16em;
+  text-decoration-thickness: 0.08em;
+}
+
+.content :focus-visible {
+  outline: 3px solid var(--color-brand-content);
+  outline-offset: 3px;
+}
+
+.highlight,
+.literal-block-wrapper {
+  margin-block: 1.4rem;
+}
+
+.highlight pre,
+pre.literal-block {
+  line-height: 1.6;
+  overflow-x: auto;
+  tab-size: 4;
+}
+
+/*
+ * Docutils' ``include: code`` option emits descriptive Pygments class names,
+ * while Sphinx's regular code blocks use abbreviated ones.  Mirror the
+ * configured Friendly palette here so included source files are highlighted
+ * consistently without changing the authoring format.
+ */
+pre.code.literal-block {
+  --code-comment: #436f78;
+  --code-keyword: #007020;
+  --code-operator: #595959;
+  --code-number: #286d49;
+  --code-string: #356388;
+  --code-builtin: #007020;
+  --code-class: #0b719a;
+  --code-constant: #176b8d;
+  --code-decorator: #555;
+  --code-function: #06287e;
+  --code-variable: #9a45b1;
+}
+
+pre.code.literal-block .comment {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+pre.code.literal-block .keyword {
+  color: var(--code-keyword);
+  font-weight: 700;
+}
+
+pre.code.literal-block .operator {
+  color: var(--code-operator);
+}
+
+pre.code.literal-block .literal.number {
+  color: var(--code-number);
+}
+
+pre.code.literal-block .literal.string {
+  color: var(--code-string);
+}
+
+pre.code.literal-block .name.builtin,
+pre.code.literal-block .name.exception {
+  color: var(--code-builtin);
+}
+
+pre.code.literal-block .name.class,
+pre.code.literal-block .name.namespace {
+  color: var(--code-class);
+  font-weight: 700;
+}
+
+pre.code.literal-block .name.constant {
+  color: var(--code-constant);
+}
+
+pre.code.literal-block .name.decorator {
+  color: var(--code-decorator);
+  font-weight: 700;
+}
+
+pre.code.literal-block .name.function {
+  color: var(--code-function);
+}
+
+pre.code.literal-block .name.variable {
+  color: var(--code-variable);
+}
+
+@media not print {
+  body[data-theme="dark"] pre.code.literal-block {
+    --code-comment: #aaa58c;
+    --code-keyword: #66d9ef;
+    --code-operator: #ff4689;
+    --code-number: #ae81ff;
+    --code-string: #e6db74;
+    --code-builtin: #f8f8f2;
+    --code-class: #a6e22e;
+    --code-constant: #66d9ef;
+    --code-decorator: #a6e22e;
+    --code-function: #a6e22e;
+    --code-variable: #f8f8f2;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body:not([data-theme="light"]) pre.code.literal-block {
+    --code-comment: #aaa58c;
+    --code-keyword: #66d9ef;
+    --code-operator: #ff4689;
+    --code-number: #ae81ff;
+    --code-string: #e6db74;
+    --code-builtin: #f8f8f2;
+    --code-class: #a6e22e;
+    --code-constant: #66d9ef;
+    --code-decorator: #a6e22e;
+    --code-function: #a6e22e;
+    --code-variable: #f8f8f2;
+  }
+}
+
+.math-wrapper,
+div.math {
+  overflow-x: auto;
+  padding-block: 0.2rem;
+}
+
+.content figure,
+.content .figure {
+  margin: 2rem 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.content figure img,
+.content .figure img {
+  display: block;
+  height: auto;
+  margin-inline: auto;
+  max-width: 100%;
+}
+
+.content figcaption,
+.content .caption {
+  font-size: 0.92rem;
+  margin: 0.7rem auto 0;
+  max-width: 42rem;
+  text-align: left;
+}
+
+.content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.content th,
+.content td {
+  min-width: 6rem;
+  vertical-align: top;
+}
+
+.content .citation-list,
+.content .footnote-list {
+  font-size: 0.92rem;
+}
+
+.toctree-wrapper.compound {
+  margin-block: 1.25rem 2rem;
+}
+
+article .toctree-wrapper > .caption {
+  display: none;
+}
+
+.sidebar-tree .caption {
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+@media (max-width: 46rem) {
+  .content {
+    line-height: 1.82;
+  }
+
+  .content h1 {
+    font-size: 1.85rem;
+  }
+
+  .content h2 {
+    margin-top: 2.2em;
+  }
+
+  .highlight pre,
+  pre.literal-block {
+    font-size: 0.86rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

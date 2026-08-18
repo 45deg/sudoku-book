@@ -1,0 +1,11 @@
+status: unsat
+coefficient_domain: QQ
+monomial_order: lex
+variables: 28
+input_polynomials: 76
+basis_polynomials: 1
+basis_shown: 1
+basis:
+  1 = 0
+solution_count: 0
+shown: 0

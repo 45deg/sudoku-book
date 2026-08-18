@@ -1,0 +1,5 @@
+status: unsat
+method: kanren permutation relations
+solutions: 0
+search exhausted: yes
+uniqueness: n/a

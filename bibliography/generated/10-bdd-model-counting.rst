@@ -1,0 +1,8 @@
+.. bibliography::
+   :style: unsrt
+   :filter: False
+
+   Bryant1986BDD
+   Bryant1992OBDD
+   DarwicheMarquis2002KnowledgeCompilation
+   Gomes2009ModelCounting

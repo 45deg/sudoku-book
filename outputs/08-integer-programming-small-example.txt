@@ -1,0 +1,4 @@
+status: Optimal
+item_a: 0
+item_b: 1
+objective: 4

@@ -1,0 +1,41 @@
+status: solved
+method: naive
+solutions: 1
+search exhausted: no
+uniqueness: not checked
+nodes: 22530
+branches: 22529
+backtracks: 22473
+eliminations: 0
+
+solution 1 (valid: yes):
+534678912
+672195348
+198342567
+859761423
+426853791
+713924856
+961537284
+287419635
+345286179
+
+status: solved
+method: propagate
+solutions: 1
+search exhausted: no
+uniqueness: not checked
+nodes: 6
+branches: 7
+backtracks: 2
+eliminations: 781
+
+solution 1 (valid: yes):
+534678912
+672195348
+198342567
+859761423
+426853791
+713924856
+961537284
+287419635
+345286179

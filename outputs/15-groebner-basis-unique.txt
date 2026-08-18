@@ -1,0 +1,19 @@
+status: solved
+coefficient_domain: QQ
+monomial_order: lex
+variables: 24
+input_polynomials: 72
+basis_polynomials: 24
+basis_shown: 4
+basis:
+  x_1_2_2 - 1 = 0
+  x_1_3_3 - 1 = 0
+  x_2_1_2 = 0
+  x_2_1_3 - 1 = 0
+solution_count: 1
+shown: 1
+solution 1:
+1234
+3412
+2143
+4321

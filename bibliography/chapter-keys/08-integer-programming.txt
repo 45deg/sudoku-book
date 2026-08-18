@@ -1,0 +1,4 @@
+highsHome
+highsPythonModeling
+highsSolvers
+highsModelStatus

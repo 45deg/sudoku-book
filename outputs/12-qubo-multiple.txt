@@ -1,0 +1,21 @@
+status: solved
+sampler: neal.SimulatedAnnealingSampler
+variables: 64
+seed: 20260808
+reads: 500
+sweeps: 2000
+best_energy: 0.0
+zero_energy_reads: 496
+distinct_valid_solutions_found: 234
+multiplicity_evidence: at-least-two
+shown: 2
+solution 1:
+1234
+3412
+2143
+4321
+solution 2:
+1234
+3412
+2341
+4123

@@ -1,0 +1,12 @@
+status: solved
+method: max-product
+iterations: 43
+converged: yes
+residual: 8.291e-11
+ties: 0
+unique: undetermined
+solution:
+1234
+3412
+2143
+4321

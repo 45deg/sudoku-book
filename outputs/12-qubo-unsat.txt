@@ -1,0 +1,11 @@
+status: unknown
+sampler: neal.SimulatedAnnealingSampler
+variables: 64
+seed: 20260808
+reads: 500
+sweeps: 2000
+best_energy: 1.0
+zero_energy_reads: 0
+distinct_valid_solutions_found: 0
+multiplicity_evidence: unknown
+shown: 0

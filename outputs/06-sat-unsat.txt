@@ -1,0 +1,10 @@
+status: unsat
+solver: MiniSat 2.2 via PySAT
+variables: 729
+base clauses: 11988
+clue clauses: 30
+total input clauses: 12018
+solve calls: 1
+solutions: 0
+search exhausted: yes
+uniqueness: n/a

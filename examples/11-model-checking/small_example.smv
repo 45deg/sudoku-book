@@ -1,0 +1,16 @@
+MODULE main
+
+VAR
+  room : {entrance, hall, goal};
+
+ASSIGN
+  init(room) := entrance;
+  next(room) := case
+    room = entrance : {entrance, hall};
+    room = hall : {hall, goal};
+    TRUE : goal;
+  esac;
+
+-- 「goalへは到達しない」という性質を検査する。
+-- 偽なら、反例の実行経路がgoalまでの道順になる。
+LTLSPEC NAME goal_is_unreachable := G room != goal;

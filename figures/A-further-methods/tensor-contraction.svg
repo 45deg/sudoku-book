@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="470" viewBox="0 0 960 470" role="img" aria-labelledby="title desc">
+  <title id="title">数独の制約テンソルを接続して解数を得る流れ</title>
+  <desc id="desc">左は行、列、ブロックの三つの制約テンソルと初期数字テンソルを、同じマスの値をそろえるCOPYテンソルへ接続したネットワーク。共有添字をすべて足し合わせる完全縮約によって、右のスカラーZが得られ、0は解なし、1は一意解、2以上は複数解を表す。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L11,4.5 L0,9 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text { font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #0f172a; }
+      .panel { font-size: 20px; font-weight: 700; text-anchor: middle; }
+      .label { font-size: 17px; font-weight: 650; text-anchor: middle; }
+      .small { font-size: 15px; text-anchor: middle; fill: #334155; }
+      .factor { fill: #FFFF80; stroke: #F6AA00; stroke-width: 3; }
+      .copy { fill: #BFE4FF; stroke: #005AFF; stroke-width: 3; }
+      .given { fill: #FFCABF; stroke: #FF4B00; stroke-width: 3; }
+      .result { fill: #77D9A8; stroke: #03AF7A; stroke-width: 3; }
+      .network { fill: none; stroke: #84919E; stroke-width: 2; stroke-dasharray: 9 7; }
+      .wire { fill: none; stroke: #334155; stroke-width: 2.5; }
+      .arrow { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .scalar { font-size: 30px; font-weight: 700; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="960" height="470" fill="#ffffff"/>
+  <text class="panel" x="315" y="32">一つのマスに接続するテンソル</text>
+  <text class="panel" x="820" y="32">完全縮約の結果</text>
+
+  <rect class="network" x="30" y="50" width="555" height="365" rx="18"/>
+
+  <path class="wire" data-connector="ほかの行変数" d="M30 115 H75"/>
+  <path class="wire" data-connector="ほかの列変数" d="M30 230 H75"/>
+  <path class="wire" data-connector="ほかのブロック変数" d="M30 345 H75"/>
+
+  <rect class="factor" x="75" y="80" width="170" height="70" rx="7"/>
+  <text class="label" x="160" y="108">行制約</text>
+  <text class="small" x="160" y="134">T_row</text>
+  <rect class="factor" x="75" y="195" width="170" height="70" rx="7"/>
+  <text class="label" x="160" y="223">列制約</text>
+  <text class="small" x="160" y="249">T_col</text>
+  <rect class="factor" x="75" y="310" width="170" height="70" rx="7"/>
+  <text class="label" x="160" y="338">ブロック制約</text>
+  <text class="small" x="160" y="364">T_box</text>
+
+  <path class="wire" data-connector="行制約からCOPY" d="M245 115 C300 115 318 181 353 204"/>
+  <path class="wire" data-connector="列制約からCOPY" d="M245 230 H346"/>
+  <path class="wire" data-connector="ブロック制約からCOPY" d="M245 345 C300 345 318 279 353 256"/>
+
+  <circle class="copy" cx="400" cy="230" r="54"/>
+  <text class="label" x="400" y="221">COPY</text>
+  <text class="small" x="400" y="249">同じマス x_rc</text>
+
+  <circle class="given" cx="400" cy="95" r="36"/>
+  <text class="label" x="400" y="91">初期</text>
+  <text class="small" x="400" y="113">数字</text>
+  <path class="wire" data-connector="初期数字からCOPY" d="M400 131 V176"/>
+
+  <path class="wire" data-connector="COPYからほかの制約" d="M454 230 H555"/>
+  <text class="small" x="455" y="305">三つの制約で</text>
+  <text class="small" x="455" y="328">同じ数字を参照</text>
+  <text class="small" x="495" y="398">この接続を81マス分作る</text>
+
+  <path class="arrow" data-connector="完全縮約" d="M605 230 H700"/>
+  <text class="small" x="652" y="195">共有添字を</text>
+  <text class="small" x="652" y="216">すべて足す</text>
+
+  <rect class="result" x="715" y="105" width="215" height="250" rx="18"/>
+  <text class="scalar" x="822" y="157">Z</text>
+  <line x1="742" y1="178" x2="903" y2="178" stroke="#334155" stroke-width="1.5"/>
+  <text class="label" x="822" y="217">Z = 0</text>
+  <text class="small" x="822" y="242">解なし</text>
+  <text class="label" x="822" y="280">Z = 1</text>
+  <text class="small" x="822" y="305">一意解</text>
+  <text class="label" x="822" y="343">Z ≥ 2 は複数解</text>
+  <text class="small" x="822" y="397">整数で完全に縮約した場合</text>
+</svg>

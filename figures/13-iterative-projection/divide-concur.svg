@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="470" viewBox="0 0 820 470" role="img" aria-labelledby="title desc">
+  <title id="title">数独候補の四つの複製に対する分割射影と合意射影</title>
+  <desc id="desc">分割集合では、マス、行、列、ブロックの局所制約が同じ候補について別々の値を持ちます。合意射影は四つを平均して同じ値にそろえます。分割射影は、それぞれの局所制約を満たす値へ戻します。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .set-divide { fill: #edf7ed; stroke: #087f5b; stroke-width: 3; }
+      .set-concur { fill: #eef4ff; stroke: #2457a6; stroke-width: 3; }
+      .value-divide { fill: #ffffff; stroke: #087f5b; stroke-width: 2.5; }
+      .value-concur { fill: #ffffff; stroke: #2457a6; stroke-width: 2.5; }
+      .connector { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .return { stroke-dasharray: 9 7; }
+      .heading { font: 650 20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .label { font: 17px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; text-anchor: middle; }
+      .value { font: 650 20px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; }
+      .arrow-label { font: 650 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect class="set-divide" x="120" y="38" width="580" height="164" rx="22"/>
+  <text class="heading" x="148" y="72">D（分割集合）：局所制約ごとに決める</text>
+
+  <circle class="value-divide" cx="225" cy="130" r="29"/>
+  <text class="value" x="225" y="130">1</text>
+  <text class="label" x="225" y="180">マス</text>
+  <circle class="value-divide" cx="350" cy="130" r="29"/>
+  <text class="value" x="350" y="130">0</text>
+  <text class="label" x="350" y="180">行・数字</text>
+  <circle class="value-divide" cx="475" cy="130" r="29"/>
+  <text class="value" x="475" y="130">1</text>
+  <text class="label" x="475" y="180">列・数字</text>
+  <circle class="value-divide" cx="600" cy="130" r="29"/>
+  <text class="value" x="600" y="130">0</text>
+  <text class="label" x="600" y="180">ブロック・数字</text>
+
+  <rect class="set-concur" x="120" y="280" width="580" height="154" rx="22"/>
+  <text class="heading" x="148" y="314">C（合意集合）：同じ候補の複製をそろえる</text>
+
+  <circle class="value-concur" cx="225" cy="366" r="29"/>
+  <text class="value" x="225" y="366">0.5</text>
+  <circle class="value-concur" cx="350" cy="366" r="29"/>
+  <text class="value" x="350" y="366">0.5</text>
+  <circle class="value-concur" cx="475" cy="366" r="29"/>
+  <text class="value" x="475" y="366">0.5</text>
+  <circle class="value-concur" cx="600" cy="366" r="29"/>
+  <text class="value" x="600" y="366">0.5</text>
+
+  <path class="connector" data-connector="true" d="M724 154 C772 193 772 242 724 318"/>
+  <text class="arrow-label" x="775" y="237" data-collision-ignore="true">P_C</text>
+  <text class="label" x="765" y="266" data-collision-ignore="true">平均する</text>
+
+  <path class="connector return" data-connector="true" d="M96 318 C48 270 48 216 96 154"/>
+  <text class="arrow-label" x="48" y="220" data-collision-ignore="true">P_D</text>
+  <text class="label" x="55" y="249" data-collision-ignore="true">個別に満たす</text>
+</svg>

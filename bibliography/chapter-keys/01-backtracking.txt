@@ -1,0 +1,2 @@
+norvig2006sudoku
+chi2012sudoku

@@ -1,0 +1,7 @@
+.uv-cache/
+.venv/
+build/
+__pycache__/
+*.pyc
+skills-lock.json
+.agents/*

@@ -1,0 +1,7 @@
+status: solved
+order: cell
+variables: 64
+rule_nodes: 2256
+query_nodes: 2256
+solution_count: 288
+shown: 0

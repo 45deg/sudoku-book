@@ -1,0 +1,28 @@
+status: solved
+coefficient_domain: QQ
+monomial_order: lex
+variables: 8
+input_polynomials: 24
+basis_polynomials: 8
+basis_shown: 8
+basis:
+  x_1_1_1 + x_3_2_2 - 1 = 0
+  x_1_1_2 - x_3_2_2 = 0
+  x_1_2_1 - x_3_2_2 = 0
+  x_1_2_2 + x_3_2_2 - 1 = 0
+  x_3_1_1 - x_3_2_2 = 0
+  x_3_1_2 + x_3_2_2 - 1 = 0
+  x_3_2_1 + x_3_2_2 - 1 = 0
+  x_3_2_2**2 - x_3_2_2 = 0
+solution_count: 2
+shown: 2
+solution 1:
+1234
+3412
+2143
+4321
+solution 2:
+2134
+3412
+1243
+4321

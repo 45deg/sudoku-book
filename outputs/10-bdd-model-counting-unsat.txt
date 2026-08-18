@@ -1,0 +1,7 @@
+status: unsat
+order: cell
+variables: 64
+rule_nodes: 2256
+query_nodes: 0
+solution_count: 0
+shown: 0

@@ -1,0 +1,32 @@
+status: solved
+solver: MiniSat 2.2 via PySAT
+variables: 729
+base clauses: 11988
+clue clauses: 63
+total input clauses: 12051
+solve calls: 3
+solutions: 2
+search exhausted: yes
+uniqueness: not unique
+
+solution 1 (valid: yes):
+534678912
+672195348
+198342567
+859761423
+426853791
+713924856
+961537284
+287419635
+345286179
+
+solution 2 (valid: yes):
+534678921
+671295348
+298341567
+859762413
+416853792
+723914856
+962537184
+187429635
+345186279

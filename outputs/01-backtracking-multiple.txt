@@ -1,0 +1,31 @@
+status: solved
+method: propagate
+solutions: 2
+search exhausted: no
+uniqueness: not unique
+nodes: 3
+branches: 2
+backtracks: 0
+eliminations: 666
+
+solution 1 (valid: yes):
+534678912
+672195348
+198342567
+859761423
+426853791
+713924856
+961537284
+287419635
+345286179
+
+solution 2 (valid: yes):
+534678921
+671295348
+298341567
+859762413
+416853792
+723914856
+962537184
+187429635
+345186279

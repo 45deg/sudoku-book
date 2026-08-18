@@ -1,0 +1,3 @@
+property: goal is unreachable
+result: false
+counterexample: entrance -> hall -> goal

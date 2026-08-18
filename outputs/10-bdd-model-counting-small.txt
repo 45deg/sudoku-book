@@ -1,0 +1,6 @@
+order: x,y,z
+decision_nodes: 3
+models: 4
+order: y,z,x
+decision_nodes: 4
+models: 4

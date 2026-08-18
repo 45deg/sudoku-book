@@ -1,0 +1,4 @@
+status: unsat
+solutions: 0
+search_complete: yes
+unique: not-applicable

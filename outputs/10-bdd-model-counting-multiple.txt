@@ -1,0 +1,17 @@
+status: solved
+order: cell
+variables: 64
+rule_nodes: 2256
+query_nodes: 117
+solution_count: 2
+shown: 2
+solution 1:
+1324
+2413
+3142
+4231
+solution 2:
+1234
+3412
+2143
+4321

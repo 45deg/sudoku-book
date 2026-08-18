@@ -1,0 +1,8 @@
+status: unsat
+method: propagate
+solutions: 0
+search exhausted: yes
+nodes: 0
+branches: 0
+backtracks: 0
+eliminations: 649

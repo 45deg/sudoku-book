@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650" role="img" aria-labelledby="title desc">
+  <title id="title">補遺で扱う数独の五つの変換先</title>
+  <desc id="desc">左の数独の規則から、規則の実行、離散問題への変換、部分問題の結合、連続的な時間発展、量子回路の五方向へ分かれ、右端に各方式が返す結果と失敗時の扱いを示す。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L11,4.5 L0,9 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text { font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #0f172a; }
+      .header { font-size: 20px; font-weight: 700; text-anchor: middle; }
+      .title { font-size: 18px; font-weight: 700; text-anchor: middle; }
+      .detail { font-size: 15px; text-anchor: middle; fill: #334155; }
+      .input { fill: #f8fafc; stroke: #334155; stroke-width: 3; }
+      .rule { fill: #BFE4FF; stroke: #005AFF; stroke-width: 3; }
+      .discrete { fill: #FFFF80; stroke: #F6AA00; stroke-width: 3; }
+      .combine { fill: #77D9A8; stroke: #03AF7A; stroke-width: 3; }
+      .dynamics { fill: #FFCABF; stroke: #FF4B00; stroke-width: 3; }
+      .quantum { fill: #C9ACE6; stroke: #990099; stroke-width: 3; }
+      .result { fill: #ffffff; stroke: #84919E; stroke-width: 2.5; }
+      .connector { fill: none; stroke: #334155; stroke-width: 2.5; marker-end: url(#arrow); }
+      .icon { font-size: 17px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+  </defs>
+
+  <rect width="1000" height="650" fill="#ffffff"/>
+  <text class="header" x="115" y="32">入力</text>
+  <text class="header" x="425" y="32">計算対象への置き換え</text>
+  <text class="header" x="825" y="32">結果の読み方</text>
+
+  <rect class="input" x="30" y="225" width="170" height="210" rx="18"/>
+  <text class="title" x="115" y="270">同じ数独</text>
+  <text class="detail" x="115" y="307">81マス</text>
+  <text class="detail" x="115" y="337">行・列・ブロック</text>
+  <text class="detail" x="115" y="367">初期数字</text>
+  <text class="detail" x="115" y="410">何へ変換するか</text>
+
+  <path class="connector" data-connector="数独から規則の実行" d="M200 260 C245 260 242 93 280 93"/>
+  <path class="connector" data-connector="数独から離散問題" d="M200 295 C245 295 242 208 280 208"/>
+  <path class="connector" data-connector="数独から部分問題" d="M200 330 L280 323"/>
+  <path class="connector" data-connector="数独から連続時間" d="M200 365 C245 365 242 438 280 438"/>
+  <path class="connector" data-connector="数独から量子回路" d="M200 400 C245 400 242 553 280 553"/>
+
+  <rect class="rule" x="285" y="53" width="280" height="80" rx="14"/>
+  <circle cx="318" cy="93" r="19" fill="#ffffff" stroke="#005AFF" stroke-width="2.5"/>
+  <text class="icon" x="318" y="94">R</text>
+  <text class="title" x="438" y="82">規則を実行する</text>
+  <text class="detail" x="438" y="111">CHR・書換え論理・再帰SQL</text>
+
+  <rect class="discrete" x="285" y="168" width="280" height="80" rx="4"/>
+  <path d="M318 184 L337 208 L318 232 L299 208 Z" fill="#ffffff" stroke="#F6AA00" stroke-width="2.5"/>
+  <text class="icon" x="318" y="209">G</text>
+  <text class="title" x="438" y="197">離散問題へ変換する</text>
+  <text class="detail" x="438" y="226">グラフ彩色・有限モデル</text>
+
+  <rect class="combine" x="285" y="283" width="280" height="80" rx="14"/>
+  <rect x="298" y="303" width="40" height="40" fill="#ffffff" stroke="#03AF7A" stroke-width="2.5"/>
+  <path d="M318 303 V343 M298 323 H338" stroke="#03AF7A" stroke-width="2"/>
+  <text class="icon" x="318" y="324">Σ</text>
+  <text class="title" x="438" y="312">部分問題を結合する</text>
+  <text class="detail" x="438" y="341">木分解・テンソルネットワーク</text>
+
+  <rect class="dynamics" x="285" y="398" width="280" height="80" rx="40"/>
+  <circle cx="318" cy="438" r="21" fill="#ffffff" stroke="#FF4B00" stroke-width="2.5"/>
+  <path d="M301 438 C307 423 313 453 319 438 C325 423 331 453 337 438" fill="none" stroke="#FF4B00" stroke-width="2.5"/>
+  <text class="title" x="438" y="427">連続的に時間発展させる</text>
+  <text class="detail" x="438" y="456">連続時間SAT・探索・振動子</text>
+
+  <rect class="quantum" x="285" y="513" width="280" height="80" rx="4"/>
+  <path d="M300 533 H336 V573 H300 Z M309 543 H327 M309 553 H327 M309 563 H327" fill="#ffffff" stroke="#990099" stroke-width="2.5"/>
+  <text class="title" x="438" y="542">量子回路で増幅する</text>
+  <text class="detail" x="438" y="571">Grover探索</text>
+
+  <path class="connector" data-connector="規則から結果" d="M565 93 H680"/>
+  <path class="connector" data-connector="離散問題から結果" d="M565 208 H680"/>
+  <path class="connector" data-connector="部分問題から結果" d="M565 323 H680"/>
+  <path class="connector" data-connector="連続時間から結果" d="M565 438 H680"/>
+  <path class="connector" data-connector="量子回路から結果" d="M565 553 H680"/>
+
+  <rect class="result" x="685" y="53" width="285" height="80" rx="14"/>
+  <text class="title" x="827" y="82">完成した盤面</text>
+  <text class="detail" x="827" y="111">全探索なら unsat も判定</text>
+
+  <rect class="result" x="685" y="168" width="285" height="80" rx="14"/>
+  <text class="title" x="827" y="197">彩色または有限モデル</text>
+  <text class="detail" x="827" y="226">完全探索なら unsat も判定</text>
+
+  <rect class="result" x="685" y="283" width="285" height="80" rx="14"/>
+  <text class="title" x="827" y="312">解または解数 Z</text>
+  <text class="detail" x="827" y="341">0・1・2以上を区別</text>
+
+  <rect class="result" x="685" y="398" width="285" height="80" rx="14"/>
+  <text class="title" x="827" y="427">検証済みの盤面</text>
+  <text class="detail" x="827" y="456">到達できなければ unknown</text>
+
+  <rect class="result" x="685" y="513" width="285" height="80" rx="14"/>
+  <text class="title" x="827" y="542">測定された候補</text>
+  <text class="detail" x="827" y="571">盤面検証器で確認</text>
+</svg>

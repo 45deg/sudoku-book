@@ -1,0 +1,17 @@
+status: solved
+method: kanren permutation relations
+solutions: 2
+search exhausted: yes
+uniqueness: not unique
+
+solution 1 (valid: yes):
+1234
+3412
+2143
+4321
+
+solution 2 (valid: yes):
+1324
+2413
+3142
+4231

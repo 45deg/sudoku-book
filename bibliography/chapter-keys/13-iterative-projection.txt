@@ -1,0 +1,3 @@
+ChiLange2012SudokuProjection
+Elser2003DifferenceMap
+GravelElser2008DivideConcur

@@ -1,0 +1,13 @@
+status: solved
+seed: 2
+beta: 0.5
+tolerance: 1e-08
+max_iterations: 2000
+iterations: 49
+initial_residual: 1.64387788
+final_residual: 9.0809443e-09
+solution:
+1324
+2413
+3142
+4231

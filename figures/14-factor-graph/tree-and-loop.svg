@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">木構造の因子グラフとループを含む因子グラフ</title>
+  <desc id="desc">左は変数ノードと因子ノードを交互につないだ木構造。右は数独の行因子と列因子が四つの変数を囲み、閉じた経路を作る。変数は円、因子は四角で表し、一つの辺では双方向のメッセージを矢印で示す。</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L0,8 L10,4 z" fill="#0072B2"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L0,8 L10,4 z" fill="#D55E00"/>
+    </marker>
+    <style>
+      text { font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #1f1f1f; }
+      .panel { font-size: 21px; font-weight: 700; }
+      .node-label { font-size: 17px; font-weight: 600; }
+      .small { font-size: 14px; }
+      .variable { fill: #e9f4fa; stroke: #0072B2; stroke-width: 3; }
+      .factor { fill: #fff0e8; stroke: #D55E00; stroke-width: 3; rx: 6; }
+      .edge { stroke: #555555; stroke-width: 2.5; fill: none; }
+      .message-out { stroke: #0072B2; stroke-width: 3; fill: none; marker-end: url(#arrow-blue); }
+      .message-in { stroke: #D55E00; stroke-width: 3; fill: none; marker-end: url(#arrow-orange); }
+      .note { font-size: 16px; fill: #555555; }
+    </style>
+  </defs>
+
+  <rect width="960" height="520" fill="#ffffff"/>
+  <line x1="475" y1="55" x2="475" y2="470" stroke="#cccccc" stroke-width="2"/>
+
+  <text x="235" y="38" text-anchor="middle" class="panel">木構造</text>
+  <text x="715" y="38" text-anchor="middle" class="panel">数独の一部に現れるループ</text>
+
+  <path d="M112 160 L188 160" class="edge" data-connector="木のX1からfA"/>
+  <path d="M252 160 L328 160" class="edge" data-connector="木のfAからX2"/>
+  <path d="M360 192 L360 278" class="edge" data-connector="木のX2からfB"/>
+  <path d="M328 310 L252 310" class="edge" data-connector="木のfBからX3"/>
+
+  <circle cx="80" cy="160" r="32" class="variable"/>
+  <text x="80" y="166" text-anchor="middle" class="node-label">X₁</text>
+  <rect x="188" y="128" width="64" height="64" class="factor"/>
+  <text x="220" y="166" text-anchor="middle" class="node-label">fₐ</text>
+  <circle cx="360" cy="160" r="32" class="variable"/>
+  <text x="360" y="166" text-anchor="middle" class="node-label">X₂</text>
+  <rect x="328" y="278" width="64" height="64" class="factor"/>
+  <text x="360" y="316" text-anchor="middle" class="node-label">fᵦ</text>
+  <circle cx="220" cy="310" r="32" class="variable"/>
+  <text x="220" y="316" text-anchor="middle" class="node-label">X₃</text>
+
+  <text x="235" y="400" text-anchor="middle" class="note">端から往復すれば、厳密な値を計算できます</text>
+
+  <path d="M606 132 L674 132" class="message-out" data-connector="変数から行因子へのメッセージ"/>
+  <path d="M674 168 L606 168" class="message-in" data-connector="行因子から変数へのメッセージ"/>
+  <text x="640" y="111" text-anchor="middle" class="small">m(X→f)</text>
+  <text x="640" y="193" text-anchor="middle" class="small">m(f→X)</text>
+
+  <path d="M746 150 L794 150" class="edge" data-connector="上の行因子からX12"/>
+  <path d="M830 186 L830 229" class="edge" data-connector="X12から右の列因子"/>
+  <path d="M830 301 L830 344" class="edge" data-connector="右の列因子からX22"/>
+  <path d="M794 380 L746 380" class="edge" data-connector="X22から下の行因子"/>
+  <path d="M674 380 L606 380" class="edge" data-connector="下の行因子からX21"/>
+  <path d="M570 344 L570 301" class="edge" data-connector="X21から左の列因子"/>
+  <path d="M570 229 L570 186" class="edge" data-connector="左の列因子からX11"/>
+
+  <circle cx="570" cy="150" r="36" class="variable"/>
+  <text x="570" y="156" text-anchor="middle" class="node-label">X₁₁</text>
+  <rect x="674" y="114" width="72" height="72" class="factor"/>
+  <text x="710" y="145" text-anchor="middle" class="small">行</text>
+  <text x="710" y="166" text-anchor="middle" class="small">因子</text>
+  <circle cx="830" cy="150" r="36" class="variable"/>
+  <text x="830" y="156" text-anchor="middle" class="node-label">X₁₂</text>
+  <rect x="794" y="229" width="72" height="72" class="factor"/>
+  <text x="830" y="260" text-anchor="middle" class="small">列</text>
+  <text x="830" y="281" text-anchor="middle" class="small">因子</text>
+  <circle cx="830" cy="380" r="36" class="variable"/>
+  <text x="830" y="386" text-anchor="middle" class="node-label">X₂₂</text>
+  <rect x="674" y="344" width="72" height="72" class="factor"/>
+  <text x="710" y="375" text-anchor="middle" class="small">行</text>
+  <text x="710" y="396" text-anchor="middle" class="small">因子</text>
+  <circle cx="570" cy="380" r="36" class="variable"/>
+  <text x="570" y="386" text-anchor="middle" class="node-label">X₂₁</text>
+  <rect x="534" y="229" width="72" height="72" class="factor"/>
+  <text x="570" y="260" text-anchor="middle" class="small">列</text>
+  <text x="570" y="281" text-anchor="middle" class="small">因子</text>
+
+  <text x="715" y="458" text-anchor="middle" class="note">同じ情報がループを回るため、反復結果は近似です</text>
+
+  <circle cx="75" cy="470" r="15" class="variable"/>
+  <text x="102" y="476" class="small">変数ノード</text>
+  <rect x="230" y="455" width="30" height="30" class="factor"/>
+  <text x="272" y="476" class="small">因子ノード</text>
+</svg>

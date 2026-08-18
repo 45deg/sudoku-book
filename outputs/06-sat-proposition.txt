@@ -1,0 +1,3 @@
+formula: (x1 OR x2) AND (NOT x1 OR NOT x2)
+model 1: x1=false x2=true
+model 2: x1=true x2=false

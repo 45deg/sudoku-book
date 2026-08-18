@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="450" viewBox="0 0 920 450" role="img" aria-labelledby="title desc">
+  <title id="title">4×4数独の一行をグラフ彩色へ変換する例</title>
+  <desc id="desc">左は4×4盤面の先頭行を強調し、数字1から4を色と数字で示す。右はその四マスを四頂点へ変換し、同じ行のすべての頂点を辺で結んだ完全グラフを示す。頂点には数字とマスの座標を併記する。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L11,4.5 L0,9 Z" fill="#334155"/>
+    </marker>
+    <style>
+      text { font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #0f172a; }
+      .panel { font-size: 20px; font-weight: 700; text-anchor: middle; }
+      .digit { font-size: 24px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; }
+      .coord { font-size: 15px; text-anchor: middle; fill: #334155; }
+      .note { font-size: 16px; text-anchor: middle; fill: #334155; }
+      .grid { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+      .selected { fill: none; stroke: #005AFF; stroke-width: 5; }
+      .edge { fill: none; stroke: #334155; stroke-width: 2.5; }
+      .arrow { fill: none; stroke: #334155; stroke-width: 3; marker-end: url(#arrow); }
+      .v1 { fill: #FFCABF; stroke: #FF4B00; stroke-width: 3; }
+      .v2 { fill: #FFFF80; stroke: #F6AA00; stroke-width: 3; }
+      .v3 { fill: #77D9A8; stroke: #03AF7A; stroke-width: 3; }
+      .v4 { fill: #BFE4FF; stroke: #005AFF; stroke-width: 3; }
+    </style>
+  </defs>
+
+  <rect width="920" height="450" fill="#ffffff"/>
+  <text class="panel" x="205" y="35">4×4盤面の一行</text>
+  <text class="panel" x="690" y="35">四頂点の完全グラフ</text>
+
+  <rect class="v1" x="75" y="80" width="65" height="65"/>
+  <rect class="v2" x="140" y="80" width="65" height="65"/>
+  <rect class="v3" x="205" y="80" width="65" height="65"/>
+  <rect class="v4" x="270" y="80" width="65" height="65"/>
+  <text class="digit" x="107.5" y="112.5">1</text>
+  <text class="digit" x="172.5" y="112.5">2</text>
+  <text class="digit" x="237.5" y="112.5">3</text>
+  <text class="digit" x="302.5" y="112.5">4</text>
+
+  <rect class="grid" x="75" y="145" width="65" height="65"/>
+  <rect class="grid" x="140" y="145" width="65" height="65"/>
+  <rect class="grid" x="205" y="145" width="65" height="65"/>
+  <rect class="grid" x="270" y="145" width="65" height="65"/>
+  <rect class="grid" x="75" y="210" width="65" height="65"/>
+  <rect class="grid" x="140" y="210" width="65" height="65"/>
+  <rect class="grid" x="205" y="210" width="65" height="65"/>
+  <rect class="grid" x="270" y="210" width="65" height="65"/>
+  <rect class="grid" x="75" y="275" width="65" height="65"/>
+  <rect class="grid" x="140" y="275" width="65" height="65"/>
+  <rect class="grid" x="205" y="275" width="65" height="65"/>
+  <rect class="grid" x="270" y="275" width="65" height="65"/>
+  <rect class="selected" x="72.5" y="77.5" width="265" height="70" rx="4"/>
+  <text class="note" x="205" y="382">同じ行の4マスを強調</text>
+
+  <path class="arrow" data-connector="盤面からグラフへの変換" d="M365 210 H475"/>
+  <text class="note" x="420" y="185">マスを頂点にする</text>
+
+  <path class="edge" data-connector="r1c1とr1c2" d="M605 120 H735"/>
+  <path class="edge" data-connector="r1c3とr1c4" d="M605 310 H735"/>
+  <path class="edge" data-connector="r1c1とr1c3" d="M565 160 V270"/>
+  <path class="edge" data-connector="r1c2とr1c4" d="M775 160 V270"/>
+  <path class="edge" data-connector="r1c1とr1c4" d="M593 148 L747 282"/>
+  <path class="edge" data-connector="r1c2とr1c3" d="M747 148 L593 282"/>
+
+  <circle class="v1" cx="565" cy="120" r="40"/>
+  <circle class="v2" cx="775" cy="120" r="40"/>
+  <circle class="v3" cx="565" cy="310" r="40"/>
+  <circle class="v4" cx="775" cy="310" r="40"/>
+  <text class="digit" x="565" y="120">1</text>
+  <text class="digit" x="775" y="120">2</text>
+  <text class="digit" x="565" y="310">3</text>
+  <text class="digit" x="775" y="310">4</text>
+  <text class="coord" x="565" y="65">(r1, c1)</text>
+  <text class="coord" x="775" y="65">(r1, c2)</text>
+  <text class="coord" x="565" y="375">(r1, c3)</text>
+  <text class="coord" x="775" y="375">(r1, c4)</text>
+  <text class="note" x="670" y="420">辺で結ばれた頂点には異なる数字を割り当てる</text>
+</svg>

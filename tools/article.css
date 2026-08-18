@@ -1,0 +1,163 @@
+:root {
+  color-scheme: light dark;
+  --page: light-dark(#ffffff, #171717);
+  --text: light-dark(#202124, #e8e8e8);
+  --muted: light-dark(#5f6368, #b4b4b4);
+  --border: light-dark(#d8dadd, #4b4b4b);
+  --code: light-dark(#f5f6f7, #242424);
+  --link: light-dark(#005ea8, #7cc4ff);
+  --accent: light-dark(#0072b2, #55bde8);
+}
+
+html {
+  background: var(--page);
+  color: var(--text);
+  font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  line-height: 1.8;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 52rem;
+  padding: 2.5rem 1.25rem 5rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.4;
+  margin-block: 2.2em 0.8em;
+}
+
+h1.title {
+  font-size: clamp(1.75rem, 5vw, 2.4rem);
+  margin-top: 0;
+}
+
+h2 {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.25em;
+}
+
+p,
+li,
+dd {
+  max-width: 48rem;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.15em;
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+code {
+  background: var(--code);
+  border-radius: 0.2rem;
+  padding: 0.08em 0.28em;
+}
+
+pre.code,
+pre.literal-block {
+  background: var(--code);
+  border: 1px solid var(--border);
+  border-radius: 0.3rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+}
+
+figure,
+div.figure {
+  margin: 2rem 0;
+  overflow-x: auto;
+  text-align: center;
+}
+
+figure img,
+div.figure img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+figcaption,
+p.caption {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin: 0.6rem auto 0;
+  max-width: 42rem;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.citation,
+.footnote {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.math {
+  overflow-x: auto;
+}
+
+.admonition {
+  background: color-mix(in srgb, var(--accent) 7%, var(--page));
+  border-inline-start: 0.25rem solid var(--accent);
+  margin: 1.5rem 0;
+  padding: 0.8rem 1rem;
+}
+
+.admonition-title {
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+
+.admonition > :last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 38rem) {
+  body {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  pre.code,
+  pre.literal-block {
+    margin-inline: -0.5rem;
+    padding: 0.75rem;
+  }
+
+  figure img[src$=".svg"],
+  div.figure img[src$=".svg"] {
+    max-width: none;
+    width: 52rem !important;
+  }
+}

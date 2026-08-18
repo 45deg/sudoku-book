@@ -1,0 +1,30 @@
+method: Algorithm X with Python sets
+candidate rows: 225
+constraint columns: 324
+limit: 2
+solutions: 2
+exhausted: no
+nodes: 100
+branches: 99
+dead ends: 0
+status: solved
+solution 1:
+534678921
+671295348
+298341567
+859762413
+416853792
+723914856
+962537184
+187429635
+345186279
+solution 2:
+534678912
+672195348
+198342567
+859761423
+426853791
+713924856
+961537284
+287419635
+345286179

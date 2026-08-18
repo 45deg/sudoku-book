@@ -1,0 +1,8 @@
+status: unknown
+method: sum-product
+iterations: 200
+converged: no
+residual: 5.030e-04
+ties: 0
+unique: undetermined
+reason_unknown: 反復上限までにメッセージが収束しませんでした

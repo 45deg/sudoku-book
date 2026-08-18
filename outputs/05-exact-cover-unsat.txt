@@ -1,0 +1,10 @@
+method: Algorithm X with Python sets
+candidate rows: 489
+constraint columns: 324
+limit: 2
+solutions: 0
+exhausted: yes
+nodes: 23
+branches: 22
+dead ends: 1
+status: unsat

@@ -1,0 +1,6 @@
+status: unsat
+engine: nuXmv BMC
+checks: 1
+solutions: 0
+search_complete: yes
+unique: not-applicable

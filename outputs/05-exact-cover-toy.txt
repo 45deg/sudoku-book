@@ -1,0 +1,10 @@
+columns: A B C D
+r1: A C
+r2: B D
+r3: A D
+r4: B C
+solutions: 2
+solution 1: r1 r2
+solution 2: r3 r4
+nodes: 5
+branches: 4

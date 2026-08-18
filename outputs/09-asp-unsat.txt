@@ -1,0 +1,5 @@
+engine: clingo 5.8.0
+limit: 2
+models: 0
+exhausted: yes
+status: unsat

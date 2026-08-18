@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="470" viewBox="0 0 980 470" role="img" aria-labelledby="title desc">
+  <title id="title">確定した数字を候補へ反映し、候補の少ないマスを選ぶ</title>
+  <desc id="desc">同じ行にある四つのマスのうち、Bが2に決まるとAとCから候補2を除ける。そのあと、候補が二つのAを選んで1と4を試す。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333333"/>
+    </marker>
+    <style>
+      text { font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #1f1f1f; }
+      .cell { fill: #f7f7f7; stroke: #555555; stroke-width: 2; }
+      .fixed { fill: #eaf7f2; stroke: #009E73; stroke-width: 3; }
+      .selected { fill: #e9f4fa; stroke: #0072B2; stroke-width: 4; }
+      .branch { fill: #fff7df; stroke: #E69F00; stroke-width: 3; }
+      .arrow { fill: none; stroke: #333333; stroke-width: 2.5; marker-end: url(#arrow); }
+      .label { font-size: 17px; font-weight: 500; }
+      .small { font-size: 14px; }
+      .candidate { font-size: 18px; }
+      .removed { fill: #D55E00; text-decoration: line-through; }
+    </style>
+  </defs>
+
+  <rect width="980" height="470" fill="#ffffff"/>
+
+  <text x="490" y="26" text-anchor="middle" class="label">確定した数字を候補へ反映してから、仮置きする</text>
+
+  <text x="28" y="76" class="label">伝播前</text>
+  <g transform="translate(145 48)">
+    <rect x="0" y="0" width="150" height="64" class="cell"/>
+    <rect x="150" y="0" width="150" height="64" class="fixed"/>
+    <rect x="300" y="0" width="150" height="64" class="cell"/>
+    <rect x="450" y="0" width="150" height="64" class="cell"/>
+    <text x="75" y="27" text-anchor="middle" class="small">A</text>
+    <text x="75" y="50" text-anchor="middle" class="candidate">{1, <tspan class="removed">2</tspan>, 4}</text>
+    <text x="225" y="27" text-anchor="middle" class="small">B</text>
+    <text x="225" y="50" text-anchor="middle" class="candidate">{2}</text>
+    <text x="375" y="27" text-anchor="middle" class="small">C</text>
+    <text x="375" y="50" text-anchor="middle" class="candidate">{1, <tspan class="removed">2</tspan>, 3}</text>
+    <text x="525" y="27" text-anchor="middle" class="small">D</text>
+    <text x="525" y="50" text-anchor="middle" class="candidate">{1, 3, 4}</text>
+  </g>
+
+  <path d="M445 124 L445 181" class="arrow" data-connector="確定値を伝播"/>
+  <text x="465" y="154" class="small">B = 2 が確定</text>
+  <text x="465" y="174" class="small">同じ単位のAとCから2を除く</text>
+
+  <text x="28" y="231" class="label">伝播後</text>
+  <g transform="translate(145 202)">
+    <rect x="0" y="0" width="150" height="70" class="selected"/>
+    <rect x="150" y="0" width="150" height="70" class="fixed"/>
+    <rect x="300" y="0" width="150" height="70" class="cell"/>
+    <rect x="450" y="0" width="150" height="70" class="cell"/>
+    <text x="75" y="28" text-anchor="middle" class="small">A　候補数2</text>
+    <text x="75" y="55" text-anchor="middle" class="candidate">{1, 4}</text>
+    <text x="225" y="28" text-anchor="middle" class="small">B　確定</text>
+    <text x="225" y="55" text-anchor="middle" class="candidate">2</text>
+    <text x="375" y="28" text-anchor="middle" class="small">C　候補数2</text>
+    <text x="375" y="55" text-anchor="middle" class="candidate">{1, 3}</text>
+    <text x="525" y="28" text-anchor="middle" class="small">D　候補数3</text>
+    <text x="525" y="55" text-anchor="middle" class="candidate">{1, 3, 4}</text>
+  </g>
+
+  <path d="M220 275 C220 328 305 328 350 357" class="arrow" data-connector="A=1へ分岐"/>
+  <path d="M220 275 C220 328 585 320 640 357" class="arrow" data-connector="A=4へ分岐"/>
+
+  <rect x="280" y="356" width="165" height="64" rx="7" class="branch"/>
+  <text x="362" y="382" text-anchor="middle" class="small">分岐1</text>
+  <text x="362" y="407" text-anchor="middle" class="label">A = 1</text>
+
+  <rect x="570" y="356" width="165" height="64" rx="7" class="branch"/>
+  <text x="652" y="382" text-anchor="middle" class="small">分岐2</text>
+  <text x="652" y="407" text-anchor="middle" class="label">A = 4</text>
+
+  <text x="490" y="454" text-anchor="middle" class="small">候補が空になった分岐は、仮置きする前へ戻る</text>
+</svg>

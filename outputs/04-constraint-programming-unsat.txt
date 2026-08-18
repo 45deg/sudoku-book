@@ -1,0 +1,7 @@
+status: unsat
+solutions: 0
+search_complete: yes
+unique: not-applicable
+nodes: 0
+failures: 1
+propagations: 43

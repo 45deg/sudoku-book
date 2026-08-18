@@ -1,0 +1,31 @@
+[project]
+name = "sudoku-solve-meta"
+version = "0.1.0"
+description = "ReStructuredText manuscripts and executable examples for the Sudoku-solving series"
+requires-python = ">=3.11"
+dependencies = [
+    "clingo==5.8.0",
+    "dd==0.6.0",
+    "dimod==0.12.22",
+    "dwave-neal==0.6.0",
+    "highspy==1.15.1",
+    "kanren==0.3.0",
+    "numpy==2.3.5 ; python_full_version < '3.12'",
+    "numpy==2.5.1 ; python_full_version >= '3.12'",
+    "python-sat==1.9.dev7",
+    "sympy==1.14.0",
+    "z3-solver==4.15.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "docutils>=0.21,<0.23",
+    "furo>=2024.8.6",
+    "pygments>=2.19,<3",
+    "pybtex>=0.25,<0.26",
+    "sphinx>=8.2,<10",
+    "sphinxcontrib-bibtex>=2.6,<3",
+]
+
+[tool.uv]
+package = false

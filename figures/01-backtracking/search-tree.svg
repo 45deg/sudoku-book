@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="570" viewBox="0 0 960 570" role="img" aria-labelledby="title desc">
+  <title id="title">数独のバックトラックにおける枝刈り</title>
+  <desc id="desc">空きマスAの候補2を仮置きすると、別のマスの候補が空になる。その時点で先の探索を打ち切り、仮置き前へ戻って候補5を試す。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="10" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L0,8 L12,4 z" fill="#333333"/>
+    </marker>
+    <marker id="back-arrow" markerWidth="12" markerHeight="10" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L0,8 L12,4 z" fill="#D55E00"/>
+    </marker>
+    <style>
+      text { font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; fill: #1f1f1f; }
+      .node { fill: #f7f7f7; stroke: #333333; stroke-width: 2; }
+      .choice { fill: #e9f4fa; stroke: #0072B2; stroke-width: 3; }
+      .edge { fill: none; stroke: #333333; stroke-width: 2; marker-end: url(#arrow); }
+      .back { fill: none; stroke: #D55E00; stroke-width: 3; stroke-dasharray: 8 6; marker-end: url(#back-arrow); }
+      .label { font-size: 17px; font-weight: 600; }
+      .small { font-size: 14px; }
+      .muted { fill: #666666; font-size: 14px; }
+    </style>
+  </defs>
+
+  <rect width="960" height="570" fill="#ffffff"/>
+  <text x="480" y="30" text-anchor="middle" class="label">候補がなくなった時点で、その先を調べない</text>
+
+  <rect x="360" y="54" width="240" height="66" rx="7" class="node"/>
+  <text x="480" y="80" text-anchor="middle" class="small">空きマスA</text>
+  <text x="480" y="105" text-anchor="middle" class="label">候補 {2, 5}</text>
+
+  <path d="M425 120 C390 155 320 170 250 198" class="edge" data-connector="候補2の分岐"/>
+  <path d="M535 120 C570 155 640 170 710 198" class="edge" data-connector="候補5の分岐"/>
+
+  <rect x="130" y="198" width="240" height="66" rx="7" class="choice"/>
+  <text x="250" y="226" text-anchor="middle" class="small">候補2の分岐</text>
+  <text x="250" y="251" text-anchor="middle" class="label">A = 2 を仮置き</text>
+
+  <rect x="590" y="198" width="240" height="66" rx="7" class="choice"/>
+  <text x="710" y="226" text-anchor="middle" class="small">候補5の分岐</text>
+  <text x="710" y="251" text-anchor="middle" class="label">A = 5 を仮置き</text>
+
+  <path d="M250 264 L250 310" class="edge" data-connector="候補2から矛盾"/>
+  <polygon points="250,310 360,365 250,420 140,365" fill="#fff0eb" stroke="#D55E00" stroke-width="3"/>
+  <text x="250" y="350" text-anchor="middle" class="label">矛盾を検出</text>
+  <text x="250" y="376" text-anchor="middle" class="small">別のマスの候補が</text>
+  <text x="250" y="398" text-anchor="middle" class="small">一つもない</text>
+
+  <path d="M250 420 L250 453" fill="none" stroke="#D55E00" stroke-width="3" data-connector="矛盾から枝刈り位置"/>
+  <line x1="185" y1="454" x2="315" y2="454" stroke="#D55E00" stroke-width="6" data-connector="枝刈りの停止線"/>
+  <text x="250" y="487" text-anchor="middle" class="label" fill="#D55E00">ここで枝刈り</text>
+  <text x="250" y="510" text-anchor="middle" class="small">この先の仮置きは調べない</text>
+  <text x="250" y="545" text-anchor="middle" class="muted">⋯ 省略された探索 ⋯</text>
+
+  <path d="M710 264 L710 327" class="edge" data-connector="候補5から探索継続"/>
+  <rect x="620" y="327" width="180" height="76" rx="38" fill="#eaf7f2" stroke="#009E73" stroke-width="3"/>
+  <rect x="627" y="334" width="166" height="62" rx="31" fill="none" stroke="#009E73" stroke-width="1.5"/>
+  <text x="710" y="359" text-anchor="middle" class="label">探索を続ける</text>
+  <text x="710" y="383" text-anchor="middle" class="small">残りのマスへ進む</text>
+
+  <path d="M140 365 C55 345 38 305 38 250 L38 190 C38 120 190 87 354 87" class="back" data-connector="矛盾から仮置き前へ戻る"/>
+  <text x="52" y="276" class="small" fill="#D55E00">仮置きを</text>
+  <text x="52" y="298" class="small" fill="#D55E00">元へ戻す</text>
+
+  <text x="710" y="445" text-anchor="middle" class="muted">戻ったあと、まだ試していない5を選ぶ</text>
+</svg>

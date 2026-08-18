@@ -1,0 +1,12 @@
+status: solved
+method: sum-product
+iterations: 44
+converged: yes
+residual: 5.642e-11
+ties: 0
+unique: undetermined
+solution:
+1234
+3412
+2143
+4321
