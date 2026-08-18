@@ -17,6 +17,10 @@ dependencies = [
     "z3-solver==4.15.4.0",
 ]
 
+[project.urls]
+Documentation = "https://45deg.github.io/sudoku-book/"
+Repository = "https://github.com/45deg/sudoku-book"
+
 [dependency-groups]
 dev = [
     "docutils>=0.21,<0.23",

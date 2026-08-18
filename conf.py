@@ -27,6 +27,7 @@ exclude_patterns = [
 
 html_theme = "furo"
 html_title = project
+html_baseurl = "https://45deg.github.io/sudoku-book/"
 html_search_language = "ja"
 templates_path = ["_templates"]
 html_static_path = ["_static"]

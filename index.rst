@@ -4,6 +4,7 @@
 
 同じ数独を異なる計算手法へ翻訳し、モデルと解き方の違いを試す連載です。
 各章では、その手法の考え方を数独へ当てはめ、実行できるサンプルを動かします。
+原稿とサンプルコードは `GitHub <https://github.com/45deg/sudoku-book>`_ で公開しています。
 
 最初から読む
 ============
@@ -68,6 +69,15 @@ Part V 反復計算で候補を探す
 
    chapters/14-iterative-projection
    chapters/15-factor-graph
+
+まとめ
+======
+
+.. toctree::
+   :caption: まとめ
+   :maxdepth: 1
+
+   chapters/16-summary
 
 補遺
 ====
