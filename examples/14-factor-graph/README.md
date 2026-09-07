@@ -1,39 +1,54 @@
-# 第14章 ファクターグラフと確率的伝播 (14-factor-graph) サンプルプログラム
+# 第15章 因子グラフ サンプルプログラム
 
-ファクターグラフ (Factor Graph) および Belief Propagation (確率的伝播法) による数独ソルバーの実装例です。
+4×4数独の因子グラフでbelief propagationを反復し、各マスの重みから完成盤面を復元・検証します。
 
-## スクリプト構成
+## 実行環境
 
-- `solve.py`: 確率的伝播法 (Belief Propagation) を用いた数独ソルバー
-- `message_example.py`: ノード間メッセージ伝播の動作デモ
-- `test_solve.py`: ソルバーの自動テストスクリプト
+以下のコマンドは、`pyproject.toml` と `fixtures/` があるリポジトリ直下で実行します。
+Python 3.11以降とuvを使い、ロックファイルに記録した依存関係を準備します。
 
-## 依存環境
-
-- Python 3.10 以上
-- 依存ライブラリ: `requirements.txt` を参照 (`numpy` 等)
-
-```bash
-pip install -r requirements.txt
+```sh
+uv sync --frozen
 ```
 
-## 実行方法と主な引数
+## 実行例
 
-```bash
-python3 solve.py <入力盤面ファイル> [オプション]
+```sh
+uv run --frozen python examples/14-factor-graph/message_example.py
+uv run --frozen python examples/14-factor-graph/solve.py \
+  examples/14-factor-graph/boards/unique-4x4.sdk --method sum-product
 ```
 
-### オプション一覧
+## オプション
 
-- `--limit N` (デフォルト: `1`)
-  - 探す解の最大個数
+| 指定 | 既定値 | 意味 |
+| --- | --- | --- |
+| `--method {sum-product,max-product}` | `sum-product` | 因子からのメッセージを、重みの和または最大値で求めます。 |
+| `--max-iterations N` | `200` | 反復上限（1以上）。 |
+| `--tolerance X` | `1e-10` | メッセージ変化の許容値（正の数）。 |
+| `--damping X` | `0.5` | 更新時に前回のメッセージを残す割合（0以上1未満）。 |
 
-### 実行例
+一回の実行で一盤面を探します。`--limit`はありません。解を得られない場合は`unknown`で、一意性や解なしは判定しません。
 
-```bash
-# メッセージ伝播デモの実行
-python3 message_example.py
+## 入力を替えて試す
 
-# 4x4数独盤面を解く
-python3 solve.py examples/14-factor-graph/boards/standard-4x4.sdk --limit 2
+実行例の入力パスを次のいずれかに替えられます。問題の種類は入力について既知の性質であり、
+この手法の出力だけでその性質を証明できるとは限りません。
+
+| 問題 | 入力パス |
+| --- | --- |
+| 一意解 | `examples/14-factor-graph/boards/unique-4x4.sdk` |
+| 解なし | `examples/14-factor-graph/boards/unsat-4x4.sdk` |
+| 複数解 | `fixtures/shidoku-4x4.sdk` |
+
+一意解問題では`--method max-product`も試します。ほかの二問の掲載結果は`sum-product`です。
+
+掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
+
+## 掲載結果の確認
+
+保存済み出力との照合には、次を実行します。
+
+```sh
+uv run --frozen python examples/14-factor-graph/generate_outputs.py --check
 ```

@@ -1,40 +1,46 @@
-# 第9章 回答セットプログラミング (09-asp) サンプルプログラム
+# 第6章 Answer Set Programming サンプルプログラム
 
-ASP (Answer Set Programming / Clingo) による数独ソルバーの実装例です。
+clingoで数独の安定モデルを列挙し、完成盤面へ戻します。
 
-## スクリプト構成
+## 実行環境
 
-- `solve.py`: Pythonからclingo APIを呼び出して数独を解くソルバー
-- `sudoku.lp`: 数独の規則を記述したASPプログラムファイル
-- `choice.py` / `choice.lp`: 選択ルールのデモ用スクリプト
-- `test_solve.py`: ソルバーの自動テストスクリプト
+以下のコマンドは、`pyproject.toml` と `fixtures/` があるリポジトリ直下で実行します。
+Python 3.11以降とuvを使い、ロックファイルに記録した依存関係を準備します。
 
-## 依存環境
-
-- Python 3.10 以上
-- 依存ライブラリ: `requirements.txt` を参照 (`clingo` 等)
-
-```bash
-pip install -r requirements.txt
+```sh
+uv sync --frozen
 ```
 
-## 実行方法と主な引数
+## 実行例
 
-```bash
-python3 solve.py <入力盤面ファイル> [オプション]
+```sh
+uv run --frozen python examples/09-asp/choice.py
+uv run --frozen python examples/09-asp/solve.py fixtures/standard-9x9.sdk --limit 2
 ```
 
-### オプション一覧
+## オプション
 
-- `--limit N` (デフォルト: `1`)
-  - 探索する解（回答セット）の最大個数
+| 指定 | 既定値 | 意味 |
+| --- | --- | --- |
+| `--limit N` | `1` | 取得する安定モデルの上限（1以上）。探索完了は`exhausted`で確認します。 |
 
-### 実行例
+## 入力を替えて試す
 
-```bash
-# 選択ルールのデモを実行
-python3 choice.py
+実行例の入力パスを次のいずれかに替えられます。問題の種類は入力について既知の性質であり、
+この手法の出力だけでその性質を証明できるとは限りません。
 
-# 標準問題を解く（最大2解）
-python3 solve.py fixtures/standard-9x9.sdk --limit 2
+| 問題 | 入力パス |
+| --- | --- |
+| 一意解 | `fixtures/standard-9x9.sdk` |
+| 解なし | `fixtures/unsat-9x9.sdk` |
+| 複数解 | `fixtures/multiple-9x9.sdk` |
+
+掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
+
+## 掲載結果の確認
+
+保存済み出力との照合には、次を実行します。
+
+```sh
+uv run --frozen python examples/09-asp/generate_outputs.py --check
 ```

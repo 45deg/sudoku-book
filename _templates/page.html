@@ -1,5 +1,26 @@
 {% extends "!page.html" %}
 
+{% block extrahead %}
+{{ super() }}
+{% set seo_title = docstitle if pagename == master_doc else title ~ " - " ~ docstitle %}
+<meta name="description" content="{{ site_description|e }}">
+<meta name="keywords" content="{{ site_keywords|e }}">
+{% if pagename != "search" -%}
+<meta name="robots" content="index, follow">
+{% endif -%}
+<meta property="og:type" content="{% if pagename == master_doc %}website{% else %}article{% endif %}">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="{{ docstitle|striptags|e }}">
+<meta property="og:title" content="{{ seo_title|striptags|e }}">
+<meta property="og:description" content="{{ site_description|e }}">
+{% if pageurl -%}
+<meta property="og:url" content="{{ pageurl|e }}">
+{% endif -%}
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ seo_title|striptags|e }}">
+<meta name="twitter:description" content="{{ site_description|e }}">
+{% endblock extrahead %}
+
 {% block right_sidebar %}
 {% if not furo_hide_toc %}
 <div class="toc-sticky toc-scroll">

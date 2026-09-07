@@ -1,35 +1,46 @@
-# 第5章 Exact Cover と Algorithm X (05-exact-cover) サンプルプログラム
+# 第2章 Exact Cover サンプルプログラム
 
-Algorithm X (DLX / Exact Cover) による数独ソルバーの実装例です。
+数独をExact Coverへ変換し、Pythonの辞書と集合を使うAlgorithm Xで解きます。Dancing Links（DLX）の実装ではありません。
 
-## スクリプト構成
+## 実行環境
 
-- `solve.py`: Exact Cover行列への定式化とAlgorithm Xによる数独ソルバー
-- `exact_cover.py`: DLX（Dancing Links）またはExact Cover探索のコアロジック
-- `toy.py`: 小規模トイモデルでの動作確認用スクリプト
-- `test_solve.py`: ソルバーの自動テストスクリプト
+以下のコマンドは、`pyproject.toml` と `fixtures/` があるリポジトリ直下で実行します。
+Python 3.11以降とuvを使い、ロックファイルに記録した依存関係を準備します。
 
-## 依存環境
-
-- Python 3.10 以上（標準ライブラリのみで動作します）
-
-## 実行方法と主な引数
-
-```bash
-python3 solve.py <入力盤面ファイル> [オプション]
+```sh
+uv sync --frozen
 ```
 
-### オプション一覧
+## 実行例
 
-- `--limit N` (デフォルト: `1`)
-  - 探索する解の最大個数
+```sh
+uv run --frozen python examples/05-exact-cover/toy.py
+uv run --frozen python examples/05-exact-cover/solve.py fixtures/standard-9x9.sdk --limit 2
+```
 
-### 実行例
+## オプション
 
-```bash
-# トイモデルの実行
-python3 toy.py
+| 指定 | 既定値 | 意味 |
+| --- | --- | --- |
+| `--limit N` | `1` | 取得する解の上限（1以上）。一意性を調べるには2を指定し、`exhausted`も確認します。 |
 
-# 標準問題を解く（最大2解）
-python3 solve.py fixtures/standard-9x9.sdk --limit 2
+## 入力を替えて試す
+
+実行例の入力パスを次のいずれかに替えられます。問題の種類は入力について既知の性質であり、
+この手法の出力だけでその性質を証明できるとは限りません。
+
+| 問題 | 入力パス |
+| --- | --- |
+| 一意解 | `fixtures/standard-9x9.sdk` |
+| 解なし | `fixtures/unsat-9x9.sdk` |
+| 複数解 | `fixtures/multiple-9x9.sdk` |
+
+掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
+
+## 掲載結果の確認
+
+保存済み出力との照合には、次を実行します。
+
+```sh
+uv run --frozen python examples/05-exact-cover/generate_outputs.py --check
 ```

@@ -1,39 +1,55 @@
-# 第13章 交互投影法 (13-iterative-projection) サンプルプログラム
+# 第14章 反復射影 サンプルプログラム
 
-交互投影法（Iterative Projection / ADMM 等）による数独ソルバーの実装例です。
+局所制約への射影と複製を一致させる射影を組み合わせ、4×4数独を探します。数独ソルバーは本文のRRR更新を使い、小例だけが単純な交互射影です。
 
-## スクリプト構成
+## 実行環境
 
-- `solve.py`: 交互投影アルゴリズムによる連続緩和と投影処理ソルバー
-- `small_projection.py`: 2次元/低次元における投影処理のデモ
-- `test_iterative_projection.py`: ソルバーの自動テストスクリプト
+以下のコマンドは、`pyproject.toml` と `fixtures/` があるリポジトリ直下で実行します。
+Python 3.11以降とuvを使い、ロックファイルに記録した依存関係を準備します。
 
-## 依存環境
-
-- Python 3.10 以上
-- 依存ライブラリ: `requirements.txt` を参照 (`numpy`, `scipy` 等)
-
-```bash
-pip install -r requirements.txt
+```sh
+uv sync --frozen
 ```
 
-## 実行方法と主な引数
+## 実行例
 
-```bash
-python3 solve.py <入力盤面ファイル> [オプション]
+```sh
+uv run --frozen python examples/13-iterative-projection/small_projection.py
+uv run --frozen python examples/13-iterative-projection/solve.py \
+  examples/13-iterative-projection/boards/unique-4x4.sdk --seed 0 --max-iterations 2000 --beta 0.5 \
+  --tolerance 1e-8
 ```
 
-### オプション一覧
+## オプション
 
-- `--limit N` (デフォルト: `1`)
-  - 探す解の最大個数
+| 指定 | 既定値 | 意味 |
+| --- | --- | --- |
+| `--seed N` | `0` | 初期配列を作る乱数シード。 |
+| `--max-iterations N` | `20000` | 反復上限（1以上）。掲載結果では2000を指定しています。 |
+| `--beta X` | `0.5` | 更新量の係数（0より大きく1以下）。 |
+| `--tolerance X` | `1e-8` | 残差の許容値（0以上）。 |
 
-### 実行例
+一回の実行で一盤面を探します。`--limit`はありません。解を得られない場合は`unknown`で、一意性や解なしは判定しません。
 
-```bash
-# 投影処理デモの実行
-python3 small_projection.py
+## 入力を替えて試す
 
-# 4x4数独盤面を解く
-python3 solve.py examples/13-iterative-projection/boards/standard-4x4.sdk --limit 2
+実行例の入力パスを次のいずれかに替えられます。問題の種類は入力について既知の性質であり、
+この手法の出力だけでその性質を証明できるとは限りません。
+
+| 問題 | 入力パス |
+| --- | --- |
+| 一意解 | `examples/13-iterative-projection/boards/unique-4x4.sdk` |
+| 解なし | `examples/13-iterative-projection/boards/unsat-4x4.sdk` |
+| 複数解 | `fixtures/shidoku-4x4.sdk` |
+
+複数解問題の掲載結果は`--seed 2 --max-iterations 2000`で得ています。ほかの二問は実行例と同じシード0です。
+
+掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
+
+## 掲載結果の確認
+
+保存済み出力との照合には、次を実行します。
+
+```sh
+uv run --frozen python examples/13-iterative-projection/generate_outputs.py --check
 ```

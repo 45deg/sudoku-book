@@ -1,1 +1,1 @@
-# Pythonの外部パッケージは使いません。nuXmv 2.2.0はREADME.rstの手順で用意します。
+# Pythonの外部パッケージは使いません。nuXmv 2.2.0はREADME.mdの手順で用意します。

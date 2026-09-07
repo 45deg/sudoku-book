@@ -1,39 +1,46 @@
-# 第8章 整数計画法 (08-integer-programming) サンプルプログラム
+# 第11章 整数計画法 サンプルプログラム
 
-整数計画法 (ILP/MIP) ソルバー (HiGHS / SciPy 等) による数独ソルバーの実装例です。
+0-1変数と線形等式で数独を表し、HiGHSのPython API（highspy）で解きます。
 
-## スクリプト構成
+## 実行環境
 
-- `solve.py`: 0-1整数計画問題として定式化し解くソルバー
-- `small_example.py`: 整数計画定式化の小規模デモ
-- `test_solve.py`: ソルバーの自動テストスクリプト
+以下のコマンドは、`pyproject.toml` と `fixtures/` があるリポジトリ直下で実行します。
+Python 3.11以降とuvを使い、ロックファイルに記録した依存関係を準備します。
 
-## 依存環境
-
-- Python 3.10 以上
-- 依存ライブラリ: `requirements.txt` を参照 (`scipy` / `highs` 等)
-
-```bash
-pip install -r requirements.txt
+```sh
+uv sync --frozen
 ```
 
-## 実行方法と主な引数
+## 実行例
 
-```bash
-python3 solve.py <入力盤面ファイル> [オプション]
+```sh
+uv run --frozen python examples/08-integer-programming/small_example.py
+uv run --frozen python examples/08-integer-programming/solve.py fixtures/standard-9x9.sdk --limit 2
 ```
 
-### オプション一覧
+## オプション
 
-- `--limit N` (デフォルト: `1`)
-  - 探索する解の最大個数
+| 指定 | 既定値 | 意味 |
+| --- | --- | --- |
+| `--limit {1,2}` | `1` | 取得する解の上限。2なら最初の盤面を除外する制約を追加し、別解を調べます。 |
 
-### 実行例
+## 入力を替えて試す
 
-```bash
-# 小規模デモの実行
-python3 small_example.py
+実行例の入力パスを次のいずれかに替えられます。問題の種類は入力について既知の性質であり、
+この手法の出力だけでその性質を証明できるとは限りません。
 
-# 標準問題を解く（最大2解）
-python3 solve.py fixtures/standard-9x9.sdk --limit 2
+| 問題 | 入力パス |
+| --- | --- |
+| 一意解 | `fixtures/standard-9x9.sdk` |
+| 解なし | `fixtures/unsat-9x9.sdk` |
+| 複数解 | `fixtures/multiple-9x9.sdk` |
+
+掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
+
+## 掲載結果の確認
+
+保存済み出力との照合には、次を実行します。
+
+```sh
+uv run --frozen python examples/08-integer-programming/generate_outputs.py --check
 ```

@@ -1,40 +1,48 @@
-# 第10章 BDDとモデルカウンティング (10-bdd-model-counting) サンプルプログラム
+# 第9章 BDDとモデル数え上げ サンプルプログラム
 
-BDD（二分決定グラフ）およびモデルカウンティングによる数独ソルバーの実装例です。
+dd.autorefで4×4数独の二分決定図（BDD）を作り、全解数を数えます。
 
-## スクリプト構成
+## 実行環境
 
-- `solve.py`: BDDを用いた数独解法および解のカウントを行うソルバー
-- `small_bdd.py`: 小規模BDD構築のデモ
-- `bdd_utils.py`: BDD構築のユーティリティ関数
-- `test_bdd_model_counting.py`: ソルバーの自動テストスクリプト
+以下のコマンドは、`pyproject.toml` と `fixtures/` があるリポジトリ直下で実行します。
+Python 3.11以降とuvを使い、ロックファイルに記録した依存関係を準備します。
 
-## 依存環境
-
-- Python 3.10 以上
-- 依存ライブラリ: `requirements.txt` を参照 (`dd` 等)
-
-```bash
-pip install -r requirements.txt
+```sh
+uv sync --frozen
 ```
 
-## 実行方法と主な引数
+## 実行例
 
-```bash
-python3 solve.py <入力盤面ファイル> [オプション]
+```sh
+uv run --frozen python examples/10-bdd-model-counting/small_bdd.py
+uv run --frozen python examples/10-bdd-model-counting/solve.py \
+  examples/10-bdd-model-counting/boards/unique-4x4.sdk --limit 2
 ```
 
-### オプション一覧
+## オプション
 
-- `--limit N` (デフォルト: `1`)
-  - 抽出・確認する解の最大個数
+| 指定 | 既定値 | 意味 |
+| --- | --- | --- |
+| `--limit N` | `2` | 表示する盤面数の上限（0以上）。0でも全解数は計算します。 |
+| `--order {cell,digit}` | `cell` | 候補変数をマス優先または数字優先で並べます。BDDの大きさに影響します。 |
 
-### 実行例
+## 入力を替えて試す
 
-```bash
-# 小規模BDDデモの実行
-python3 small_bdd.py
+実行例の入力パスを次のいずれかに替えられます。問題の種類は入力について既知の性質であり、
+この手法の出力だけでその性質を証明できるとは限りません。
 
-# 4x4数独盤面を解く
-python3 solve.py examples/10-bdd-model-counting/boards/standard-4x4.sdk --limit 2
+| 問題 | 入力パス |
+| --- | --- |
+| 一意解 | `examples/10-bdd-model-counting/boards/unique-4x4.sdk` |
+| 解なし | `examples/10-bdd-model-counting/boards/unsat-4x4.sdk` |
+| 複数解 | `fixtures/shidoku-4x4.sdk` |
+
+掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
+
+## 掲載結果の確認
+
+保存済み出力との照合には、次を実行します。
+
+```sh
+uv run --frozen python examples/10-bdd-model-counting/generate_outputs.py --check
 ```

@@ -34,6 +34,13 @@ html_theme = "furo"
 html_title = project
 html_baseurl = "https://45deg.github.io/sudoku-book/"
 html_search_language = "ja"
+html_context = {
+    "site_description": (
+        "同じ数独を15通りの計算手法へ翻訳し、モデルと解き方の違いを、"
+        "実行できるサンプルとともに紹介するオンラインブックです。"
+    ),
+    "site_keywords": "数独, Sudoku, アルゴリズム, 制約充足問題, 数理最適化",
+}
 templates_path = ["_templates"]
 html_static_path = ["_static"]
 html_css_files = ["book.css"]

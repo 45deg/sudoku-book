@@ -201,7 +201,7 @@ MiniSatはCNFをどう調べるか
 おおむね次の処理が起こります。
 
 単位伝播
-   節に未確定のリテラルが一つしか残らなければ、そのリテラルを真にします。たとえば初期配置で
+   節のリテラルが一つだけ未確定で、ほかがすべて偽なら、残るリテラルを真にします。たとえば初期配置で
    :math:`X_{0,0,5}` が真になると、同じマスのpairwise節からほかの8候補が偽になります。
 
 決定
@@ -221,7 +221,7 @@ MiniSatを呼び出します。
 モデルを盤面へ戻す
 ==================
 
-``MiniSat22.get_model()`` は、正負の整数を並べたモデルを返します。正の整数に対応する候補だけを
+``Minisat22.get_model()`` は、正負の整数を並べたモデルを返します。正の整数に対応する候補だけを
 集め、各マスで真になった数字を一つずつ取り出します。
 
 .. include:: ../examples/06-sat/solve.py
@@ -260,6 +260,18 @@ MiniSatを呼び出します。
 
 通常問題
 --------
+
+入力は ``fixtures/standard-9x9.sdk`` です。リポジトリ直下で次を実行します。
+
+.. include:: ../fixtures/standard-9x9.sdk
+   :literal:
+
+.. code-block:: console
+
+   $ uv run --frozen python examples/06-sat/solve.py fixtures/standard-9x9.sdk --limit 2
+
+.. include:: ../outputs/06-sat-standard.txt
+   :literal:
 
 通常問題には25個の初期配置があるため、CNF全体で12,013節となります。最初に満たすモデルを得た後、その盤面を禁止するブロッキング節を追加して再度探索すると非充足となるため、一意解であることが判定できます。
 

@@ -210,7 +210,18 @@ Prologとの違い
 .. include:: ../examples/03-minikanren/puzzles/unique-4x4.sdk
    :literal:
 
-二つ目までの解を要求しても、一つの解を得た後にストリームが終了するため、一意解であることが確認されます。出力盤面は共通検証器でも確認しています。
+リポジトリ直下で次を実行します。
+
+.. code-block:: console
+
+   $ uv run --frozen python examples/03-minikanren/solve.py \
+       examples/03-minikanren/puzzles/unique-4x4.sdk --limit 2
+
+.. include:: ../outputs/03-minikanren-unique.txt
+   :literal:
+
+表示上限は二解ですが、内部では三解まで要求してストリームの終了も確認します。
+一解だけで終了したため、一意解と分かります。出力盤面は共通検証器でも確認しています。
 
 解がない問題
 ------------

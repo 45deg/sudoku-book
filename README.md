@@ -20,7 +20,7 @@ make render
 make serve
 ```
 
-原稿、サンプルコード、SVG、生成済み出力をまとめて検査するには `make check` を使います。一部の例では、SWI-Prolog、MiniZinc、NuSMVなどの外部処理系も必要です。詳しい執筆・検証方針は [AUTHORING.rst](AUTHORING.rst) を参照してください。
+原稿、サンプルコード、SVG、生成済み出力をまとめて検査するには `make check` を使います。一部の例では、SWI-Prolog、MiniZinc（Gecode）、nuXmvなどの外部処理系も必要です。各手法のREADMEに準備と実行の手順があります。詳しい執筆・検証方針は [AUTHORING.rst](AUTHORING.rst) を参照してください。
 
 ## デプロイ
 

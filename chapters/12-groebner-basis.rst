@@ -181,7 +181,22 @@ SymPyの ``solve_poly_system`` に基底を渡し、各変数の値を厳密に�
 通常問題
 --------
 
-24変数と72本の入力方程式から計算されたグレブナー基底においては、各変数に対する1次式（例: :math:`x_{1,2,2} - 1 = 0` や :math:`x_{2,1,2} = 0`）が得られ、各マスの数字の選択が直接的に定まります。全根を復元した結果が1盤面のみとなることから一意解であることが判定されます。
+入力は ``examples/15-groebner-basis/boards/unique-4x4.sdk`` です。リポジトリ直下で次を実行します。
+
+.. include:: ../examples/15-groebner-basis/boards/unique-4x4.sdk
+   :literal:
+
+.. code-block:: console
+
+   $ uv run --frozen python examples/15-groebner-basis/solve.py \
+       examples/15-groebner-basis/boards/unique-4x4.sdk --basis-limit 4 --limit 2
+
+.. include:: ../outputs/15-groebner-basis-unique.txt
+   :literal:
+
+24変数と72本の入力方程式から、各変数を決める一次式が得られました。
+たとえば :math:`x_{1,2,2}-1=0` は1行2列に2を置くこと、:math:`x_{2,1,2}=0` は
+2行1列に2を置かないことを示します。全根から復元した盤面は一つなので、一意解です。
 
 解が複数ある問題
 ------------------

@@ -172,7 +172,21 @@ Exact Cover表の条件列には、次の四種類の条件を置きます。そ
 通常問題
 --------
 
-通常問題では529行・324列の表が構成され、解が一つ得られた後に全選択肢の探索が完了（``exhausted: yes``）し、本問題が一意解であることが確定します。
+入力は ``fixtures/standard-9x9.sdk`` です。リポジトリ直下で次を実行します。
+
+.. include:: ../fixtures/standard-9x9.sdk
+   :literal:
+
+.. code-block:: console
+
+   $ uv run --frozen python examples/05-exact-cover/solve.py fixtures/standard-9x9.sdk --limit 2
+
+.. include:: ../outputs/05-exact-cover-standard.txt
+   :literal:
+
+通常問題では529行・324列の表ができました。一つの解を得た後に探索が完了し、
+``exhausted: yes`` となったため、一意解と分かります。探索関数の呼び出しは352回、
+候補行を試した回数は351回でした。
 
 解がない問題
 ------------

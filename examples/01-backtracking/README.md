@@ -1,39 +1,47 @@
-# 第1章 バックトラック (01-backtracking) サンプルプログラム
+# 第1章 バックトラック サンプルプログラム
 
-バックトラック法による数独ソルバーの実装例です。
+盤面を直接操作するPython実装です。単純な探索と、候補伝播・MRVを組み合わせた探索を比較します。
 
-## スクリプト構成
+## 実行環境
 
-- `solve.py`: バックトラック法による数独ソルバー
-- `test_solve.py`: ソルバーの自動テスト
+以下のコマンドは、`pyproject.toml` と `fixtures/` があるリポジトリ直下で実行します。
+Python 3.11以降とuvを使い、ロックファイルに記録した依存関係を準備します。
 
-## 依存環境
-
-Python 3.10 以上（標準ライブラリのみで動作します）
-
-## 実行方法と主な引数
-
-```bash
-python3 solve.py <入力盤面ファイル> [オプション]
+```sh
+uv sync --frozen
 ```
 
-### オプション一覧
+## 実行例
 
-- `--method {naive,propagate}` (デフォルト: `propagate`)
-  - `naive`: 候補の絞り込みを行わず、最初の空きマスから順に仮置きして探索する手法
-  - `propagate`: 候補伝播（1行・1列・1ブロック内で確定した数字を除外）および MRV（残りの候補が最も少ないマスを優先）を組み合わせた手法
-- `--limit N` (デフォルト: `1`)
-  - 探索する解の最大個数。`1` を指定すると最初の解を見つけた時点で終了し、`2` 以上を指定すると複数解の有無を確認できます。
+```sh
+uv run --frozen python examples/01-backtracking/solve.py fixtures/standard-9x9.sdk --method \
+  propagate --limit 2
+```
 
-### 実行例
+## オプション
 
-```bash
-# Naive手法で解く（探索回数などの計測用）
-python3 solve.py fixtures/standard-9x9.sdk --method naive --limit 1
+| 指定 | 既定値 | 意味 |
+| --- | --- | --- |
+| `--method {naive,propagate}` | `propagate` | `naive` は最初の空きマスで規則に合う数字を試します。`propagate` は裸のシングル・隠れたシングルの伝播とMRVを使います。 |
+| `--limit N` | `1` | 探索する解の上限（1以上）。一意性を調べるには2を指定し、探索完了も確認します。 |
 
-# 候補伝播+MRV手法で解く
-python3 solve.py fixtures/standard-9x9.sdk --method propagate --limit 1
+## 入力を替えて試す
 
-# 解の一意性を確認する（最大2つまで解を探す）
-python3 solve.py fixtures/standard-9x9.sdk --method propagate --limit 2
+実行例の入力パスを次のいずれかに替えられます。問題の種類は入力について既知の性質であり、
+この手法の出力だけでその性質を証明できるとは限りません。
+
+| 問題 | 入力パス |
+| --- | --- |
+| 一意解 | `fixtures/standard-9x9.sdk` |
+| 解なし | `fixtures/unsat-9x9.sdk` |
+| 複数解 | `fixtures/multiple-9x9.sdk` |
+
+掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
+
+## 掲載結果の確認
+
+保存済み出力との照合には、次を実行します。
+
+```sh
+uv run --frozen python tools/generate_outputs.py --check
 ```

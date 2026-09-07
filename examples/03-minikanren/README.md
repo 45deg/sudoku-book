@@ -1,39 +1,47 @@
-# 第3章 miniKanren (03-minikanren) サンプルプログラム
+# 第4章 miniKanren サンプルプログラム
 
-miniKanren (kanren / logic) による数独ソルバーの実装例です。
+Pythonのkanrenで、4×4数独の各行・列・ブロックを順列の関係として記述します。
 
-## スクリプト構成
+## 実行環境
 
-- `solve.py`: miniKanrenによる数独ソルバー
-- `relation_demo.py`: 関係と言語機能のデモ用プログラム
-- `test_solve.py`: ソルバーの自動テストスクリプト
+以下のコマンドは、`pyproject.toml` と `fixtures/` があるリポジトリ直下で実行します。
+Python 3.11以降とuvを使い、ロックファイルに記録した依存関係を準備します。
 
-## 依存環境
-
-- Python 3.10 以上
-- 依存ライブラリ: `requirements.txt` を参照（`kanren` 等）
-
-```bash
-pip install -r requirements.txt
+```sh
+uv sync --frozen
 ```
 
-## 実行方法と主な引数
+## 実行例
 
-```bash
-python3 solve.py <入力盤面ファイル> [オプション]
+```sh
+uv run --frozen python examples/03-minikanren/relation_demo.py
+uv run --frozen python examples/03-minikanren/solve.py \
+  examples/03-minikanren/puzzles/unique-4x4.sdk --limit 2
 ```
 
-### オプション一覧
+## オプション
 
-- `--limit N` (デフォルト: `1`)
-  - 探索する解の最大個数。`1` で最初の解で停止、`2` 以上で複数解の検証を行います。
+| 指定 | 既定値 | 意味 |
+| --- | --- | --- |
+| `--limit N` | `2` | 表示する解の上限（1以上）。内部ではN+1個まで要求し、ストリームが終了したかも確認します。 |
 
-### 実行例
+## 入力を替えて試す
 
-```bash
-# 関係デモの実行
-python3 relation_demo.py
+実行例の入力パスを次のいずれかに替えられます。問題の種類は入力について既知の性質であり、
+この手法の出力だけでその性質を証明できるとは限りません。
 
-# 4x4数独を解く（一意性の確認）
-python3 solve.py examples/03-minikanren/puzzles/unique-4x4.sdk --limit 2
+| 問題 | 入力パス |
+| --- | --- |
+| 一意解 | `examples/03-minikanren/puzzles/unique-4x4.sdk` |
+| 解なし | `examples/03-minikanren/puzzles/unsat-4x4.sdk` |
+| 複数解 | `fixtures/shidoku-4x4.sdk` |
+
+掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
+
+## 掲載結果の確認
+
+保存済み出力との照合には、次を実行します。
+
+```sh
+uv run --frozen python examples/03-minikanren/generate_outputs.py --check
 ```

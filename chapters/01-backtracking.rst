@@ -199,6 +199,18 @@
 .. include:: ../fixtures/standard-9x9.sdk
    :literal:
 
+リポジトリ直下で次の二つのコマンドを実行します。
+
+.. code-block:: console
+
+   $ uv run --frozen python examples/01-backtracking/solve.py fixtures/standard-9x9.sdk --method \
+       naive --limit 1
+   $ uv run --frozen python examples/01-backtracking/solve.py fixtures/standard-9x9.sdk --method \
+       propagate --limit 1
+
+.. include:: ../outputs/01-backtracking-standard.txt
+   :literal:
+
 この問題を二つの方法で解くと、単純な実装（Naive）では最初の解を得るまでに探索関数を22,530回呼び出し、22,473回の巻き戻しが発生します。一方、候補伝播とMRVを組み合わせた手法では、探索関数の呼び出しは6回、仮置きは7回、巻き戻しは2回で済みます。
 
 この比較から、候補伝播や候補の少ないマスを優先する工夫が、バックトラックにおける分岐数を大幅に削減していることが確認できます。

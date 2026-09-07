@@ -192,22 +192,42 @@ Difference Mapは、単純な交互射影で起きる停滞への対処として
    :end-before: # END article-difference-map
 
 ``beta`` は一回の更新量を調整します。掲載結果では0.5に固定しました。初期配列は標準正規分布から
-作るため、``seed`` も結果の一部です。反復上限到達時および残差が閾値以下であっても復元盤面が
-検証失敗となった不整合状態においては、一律 ``unknown`` として処理します。
+作るため、``seed`` も結果の一部です。反復上限に達した場合は ``unknown`` とします。
+残差が閾値以下でも、復元した盤面が検証を通らなければ ``unknown`` です。
 
 4×4問題を固定条件で実行する
 ================================
 
 詳しい実行手順やオプションについては :repo-file:`examples/13-iterative-projection/README.md` を参照してください。
 
-固定した初期シードとパラメータ（:math:`\beta=0.5` 等）での試行において、43反復で残差が許容誤差（:math:`10^{-8}` 以下）まで減少し、検証を通過する有効な完成盤面が得られます。ただし、この反復数は初期値やパラメータ設定に依存した特定試行の結果です。
+入力は ``examples/13-iterative-projection/boards/unique-4x4.sdk`` です。リポジトリ直下で次を実行します。
+
+.. include:: ../examples/13-iterative-projection/boards/unique-4x4.sdk
+   :literal:
+
+.. code-block:: console
+
+   $ uv run --frozen python examples/13-iterative-projection/solve.py \
+       examples/13-iterative-projection/boards/unique-4x4.sdk --seed 0 --max-iterations 2000 \
+       --beta 0.5 --tolerance 1e-8
+
+.. include:: ../outputs/13-iterative-projection-unique.txt
+   :literal:
+
+この条件では43反復で残差が :math:`10^{-8}` 以下になり、共通検証器を通る盤面が得られました。
+43回という反復数は、この入力、シード、パラメータでの結果です。
 
 収束しなければunknownにする
 ================================
 
-解が存在しない盤面（あるいは特定の初期値において収束しなかった盤面）に対して実行すると、最大反復上限（2,000反復など）に達しても残差が許容誤差以下まで低下しません。
+入力を ``examples/13-iterative-projection/boards/unsat-4x4.sdk`` に替え、同じパラメータで実行すると、
+2,000反復しても残差が許容値まで下がりませんでした。
 
-この場合、結果は ``unsat`` ではなく ``unknown`` となります。反復射影における交点未検出は制約集合の交点非存在（解なし）を厳密に証明するものではなく、単に指定条件で収束しなかった状態を表すためです。
+.. include:: ../outputs/13-iterative-projection-unknown.txt
+   :literal:
+
+結果は ``unknown`` です。指定条件で交点を見つけられなかっただけでは、交点が存在しないとは
+証明できません。解がある盤面でも、初期値や反復上限によっては ``unknown`` になります。
 
 また、複数解を持つ問題で一解が得られた場合であっても、Difference Mapの1回の試行のみから他の解の存在や一意性を確定することはできません。連続空間での反復探索は解の列挙を行わないためです。
 
