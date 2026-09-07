@@ -220,6 +220,25 @@ div.math {
   margin-block: 1.25rem 2rem;
 }
 
+/* Purpose-built front page. */
+.book-home { --ink:#173240; --muted:#5c6d73; --paper:#f8f6ef; color:var(--ink); margin:-1.25rem -1rem 2rem; }
+body:has(.book-home) #furo-main-content > section > h1:first-child { display:none; }
+.book-home * { box-sizing:border-box; }
+.home-hero { background:var(--paper); min-height:34rem; overflow:hidden; padding:clamp(3rem,8vw,6.5rem) clamp(1.5rem,7vw,6rem); position:relative; }
+.home-kicker,.section-label,.method-number,.home-notes span { color:#087780; font-family:var(--font-stack--monospace); font-size:.73rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.home-hero h1 { color:var(--ink); font-family:Georgia,"Hiragino Mincho ProN",serif; font-size:clamp(2.65rem,6vw,5rem); letter-spacing:-.06em; line-height:1.14; margin:.85rem 0 1.25rem; position:relative; z-index:1; }
+.home-lead { color:var(--muted); font-size:1.04rem; line-height:1.85; margin:0; position:relative; z-index:1; }
+.home-actions { display:flex; flex-wrap:wrap; gap:.7rem; margin-top:2rem; position:relative; z-index:1; }
+.home-button { align-items:center; border:1px solid var(--ink); display:inline-flex; font-size:.9rem; font-weight:700; gap:.7rem; padding:.75rem 1rem; text-decoration:none; }
+.home-button-primary { background:var(--ink); color:#fff; }.home-button-primary:hover { background:#087780; color:#fff; }.home-button-secondary { color:var(--ink); }.home-button-secondary:hover { background:#fff; color:var(--ink); }
+.sudoku-mark { display:grid; gap:0; grid-template-columns:repeat(9,1fr); opacity:.22; position:absolute; right:-5.3rem; top:2.4rem; transform:rotate(12deg); width:min(42vw,31rem); }
+.sudoku-mark span { align-items:center; aspect-ratio:1; border:1px solid #22777a; color:#075e68; display:flex; font-family:Georgia,serif; font-size:clamp(.9rem,2vw,1.75rem); font-weight:700; justify-content:center; }.sudoku-mark span:nth-child(3n) { border-right-width:3px; }.sudoku-mark span:nth-child(9n + 1) { border-left-width:3px; }.sudoku-mark span:nth-child(n + 19):nth-child(-n + 27),.sudoku-mark span:nth-child(n + 46):nth-child(-n + 54) { border-bottom-width:3px; }
+.home-intro,.home-journey,.home-notes { padding:clamp(3.5rem,7vw,6rem) clamp(1.5rem,7vw,6rem); }.home-intro { display:grid; gap:2.5rem; grid-template-columns:minmax(0,1fr) minmax(16rem,.8fr); }.book-home h2 { color:var(--ink); font-family:Georgia,"Hiragino Mincho ProN",serif; font-size:clamp(1.75rem,3.2vw,2.6rem); letter-spacing:-.04em; line-height:1.3; margin:.45rem 0 0; }.home-intro > p { color:var(--muted); line-height:2; margin:1.5rem 0 0; }
+.home-journey { background:#173240; }.home-journey .section-heading { align-items:end; display:flex; justify-content:space-between; margin-bottom:2rem; }.home-journey .section-label { color:#82d9d5; }.home-journey h2 { color:#fff; }.home-journey .section-heading > a { color:#fff; font-size:.9rem; text-underline-offset:.2em; }.method-grid { display:grid; gap:1px; grid-template-columns:repeat(5,1fr); }.method-card { background:#21414d; color:#fff; display:flex; flex-direction:column; min-height:12rem; padding:1.15rem; text-decoration:none; transition:background .18s ease,transform .18s ease; }.method-card:hover { background:#0b6d75; color:#fff; transform:translateY(-.25rem); }.method-card .method-number { color:#82d9d5; }.method-card strong { font-size:1rem; line-height:1.45; margin-top:auto; }.method-card > span:last-child { color:#c8dcdd; font-size:.75rem; line-height:1.6; margin-top:.55rem; }
+.home-notes { background:var(--paper); display:grid; gap:2rem; grid-template-columns:repeat(3,1fr); }.home-notes > div { border-top:2px solid #087780; padding-top:1.1rem; }.home-notes h2 { font-size:1.45rem; margin-top:.6rem; }.home-notes p { color:var(--muted); font-size:.9rem; line-height:1.8; }
+@media (max-width:52rem) { .sudoku-mark { right:-8rem; top:8rem; width:27rem; }.method-grid { grid-template-columns:repeat(2,1fr); }.method-card:last-child { grid-column:span 2; } }
+@media (max-width:38rem) { .book-home { margin-inline:-.5rem; }.home-hero { min-height:33rem; }.home-intro,.home-notes { grid-template-columns:1fr; }.home-journey .section-heading { align-items:start; flex-direction:column; gap:1.25rem; }.method-grid { grid-template-columns:1fr; }.method-card,.method-card:last-child { grid-column:auto; min-height:9rem; }.sudoku-mark { opacity:.14; right:-8rem; top:12rem; } }
+
 article .toctree-wrapper > .caption {
   display: none;
 }
