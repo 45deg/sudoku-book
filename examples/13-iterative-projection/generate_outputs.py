@@ -12,7 +12,7 @@ COMMANDS = {
     "13-iterative-projection-small.txt": [str(HERE / "small_projection.py")],
     "13-iterative-projection-unique.txt": [
         str(HERE / "solve.py"),
-        str(HERE / "boards" / "unique-4x4.sdk"),
+        str(ROOT / "fixtures" / "standard-9x9.sdk"),
         "--seed",
         "0",
         "--max-iterations",
@@ -20,7 +20,7 @@ COMMANDS = {
     ],
     "13-iterative-projection-unknown.txt": [
         str(HERE / "solve.py"),
-        str(HERE / "boards" / "unsat-4x4.sdk"),
+        str(ROOT / "fixtures" / "unsat-9x9.sdk"),
         "--seed",
         "0",
         "--max-iterations",
@@ -28,7 +28,7 @@ COMMANDS = {
     ],
     "13-iterative-projection-multiple.txt": [
         str(HERE / "solve.py"),
-        str(ROOT / "fixtures" / "shidoku-4x4.sdk"),
+        str(ROOT / "fixtures" / "multiple-9x9.sdk"),
         "--seed",
         "2",
         "--max-iterations",

@@ -20,13 +20,13 @@ def generated_outputs() -> dict[str, str]:
     return {
         "12-qubo-penalty.txt": run([sys.executable, str(HERE / "penalty_example.py")]),
         "12-qubo-unique.txt": run(
-            [sys.executable, str(HERE / "solve.py"), str(HERE / "boards" / "unique-4x4.sdk")]
+            [sys.executable, str(HERE / "solve.py"), str(ROOT / "fixtures" / "standard-9x9.sdk")]
         ),
         "12-qubo-multiple.txt": run(
-            [sys.executable, str(HERE / "solve.py"), str(HERE / "boards" / "multiple-4x4.sdk")]
+            [sys.executable, str(HERE / "solve.py"), str(ROOT / "fixtures" / "multiple-9x9.sdk")]
         ),
         "12-qubo-unsat.txt": run(
-            [sys.executable, str(HERE / "solve.py"), str(HERE / "boards" / "unsat-4x4.sdk")]
+            [sys.executable, str(HERE / "solve.py"), str(ROOT / "fixtures" / "unsat-9x9.sdk")]
         ),
     }
 

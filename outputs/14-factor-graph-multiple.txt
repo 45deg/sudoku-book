@@ -1,8 +1,8 @@
 status: unknown
 method: sum-product
-iterations: 44
+iterations: 38
 converged: yes
-residual: 6.491e-11
-ties: 8
+residual: 7.459e-11
+ties: 18
 unique: undetermined
 reason_unknown: 最大のbeliefが同点またはほぼ同点のマスがあります

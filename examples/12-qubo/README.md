@@ -1,6 +1,9 @@
 # 第13章 QUBO サンプルプログラム
 
-dimodで数独のQUBOを作り、nealの古典的な焼きなまし法で4×4盤面を探します。CPU上で動作します。
+dimodで数独のQUBOを作り、nealの古典的な焼きなまし法で9×9盤面を探します。CPU上で動作します。
+
+モデルは729変数です。初期配置のマスと、初期配置に衝突する候補を固定してからサンプリングします。
+通常問題では223変数が残ります。`variables`は固定前、`sampled_variables`は固定後の変数数です。
 
 ## 実行環境
 
@@ -15,7 +18,7 @@ uv sync --frozen
 
 ```sh
 uv run --frozen python examples/12-qubo/penalty_example.py
-uv run --frozen python examples/12-qubo/solve.py examples/12-qubo/boards/unique-4x4.sdk --seed \
+uv run --frozen python examples/12-qubo/solve.py fixtures/standard-9x9.sdk --seed \
   20260808 --reads 500 --sweeps 2000 --limit 2
 ```
 
@@ -37,9 +40,9 @@ uv run --frozen python examples/12-qubo/solve.py examples/12-qubo/boards/unique-
 
 | 問題 | 入力パス |
 | --- | --- |
-| 一意解 | `examples/12-qubo/boards/unique-4x4.sdk` |
-| 解なし | `examples/12-qubo/boards/unsat-4x4.sdk` |
-| 複数解 | `examples/12-qubo/boards/multiple-4x4.sdk` |
+| 一意解 | `fixtures/standard-9x9.sdk` |
+| 解なし | `fixtures/unsat-9x9.sdk` |
+| 複数解 | `fixtures/multiple-9x9.sdk` |
 
 掲載出力と実行条件の対応は、下記の生成スクリプトにも記録しています。
 

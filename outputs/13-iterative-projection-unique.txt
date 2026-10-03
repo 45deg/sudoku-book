@@ -3,11 +3,16 @@ seed: 0
 beta: 0.5
 tolerance: 1e-08
 max_iterations: 2000
-iterations: 43
-initial_residual: 1.55337699
-final_residual: 6.99422337e-09
+iterations: 1528
+initial_residual: 1.69227635
+final_residual: 5.83694926e-09
 solution:
-1234
-3412
-2143
-4321
+534678912
+672195348
+198342567
+859761423
+426853791
+713924856
+961537284
+287419635
+345286179

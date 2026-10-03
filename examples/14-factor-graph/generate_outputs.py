@@ -22,9 +22,9 @@ def run_script(name: str, *arguments: str) -> str:
 
 
 def generated_outputs() -> dict[str, str]:
-    unique = HERE / "boards" / "unique-4x4.sdk"
-    unsat = HERE / "boards" / "unsat-4x4.sdk"
-    multiple = ROOT / "fixtures" / "shidoku-4x4.sdk"
+    unique = ROOT / "fixtures" / "standard-9x9.sdk"
+    unsat = ROOT / "fixtures" / "unsat-9x9.sdk"
+    multiple = ROOT / "fixtures" / "multiple-9x9.sdk"
     return {
         "14-factor-graph-message.txt": run_script("message_example.py"),
         "14-factor-graph-unique-sum.txt": run_script(

@@ -1,6 +1,6 @@
 # 第14章 反復射影 サンプルプログラム
 
-局所制約への射影と複製を一致させる射影を組み合わせ、4×4数独を探します。数独ソルバーは本文のRRR更新を使い、小例だけが単純な交互射影です。
+局所制約への射影と複製を一致させる射影を組み合わせ、9×9数独を探します。数独ソルバーは本文のRRR更新を使い、小例だけが単純な交互射影です。
 
 ## 実行環境
 
@@ -16,7 +16,7 @@ uv sync --frozen
 ```sh
 uv run --frozen python examples/13-iterative-projection/small_projection.py
 uv run --frozen python examples/13-iterative-projection/solve.py \
-  examples/13-iterative-projection/boards/unique-4x4.sdk --seed 0 --max-iterations 2000 --beta 0.5 \
+  fixtures/standard-9x9.sdk --seed 0 --max-iterations 2000 --beta 0.5 \
   --tolerance 1e-8
 ```
 
@@ -38,9 +38,9 @@ uv run --frozen python examples/13-iterative-projection/solve.py \
 
 | 問題 | 入力パス |
 | --- | --- |
-| 一意解 | `examples/13-iterative-projection/boards/unique-4x4.sdk` |
-| 解なし | `examples/13-iterative-projection/boards/unsat-4x4.sdk` |
-| 複数解 | `fixtures/shidoku-4x4.sdk` |
+| 一意解 | `fixtures/standard-9x9.sdk` |
+| 解なし | `fixtures/unsat-9x9.sdk` |
+| 複数解 | `fixtures/multiple-9x9.sdk` |
 
 複数解問題の掲載結果は`--seed 2 --max-iterations 2000`で得ています。ほかの二問は実行例と同じシード0です。
 

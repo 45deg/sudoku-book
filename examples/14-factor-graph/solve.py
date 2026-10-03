@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-"""Solve 4x4 Sudoku approximately with loopy belief propagation."""
+"""Solve 9x9 Sudoku approximately with loopy belief propagation."""
 
 from __future__ import annotations
 
 import argparse
 import sys
 from dataclasses import dataclass
-from itertools import permutations
 from math import prod
 from pathlib import Path
 from typing import Literal
@@ -54,24 +53,28 @@ def all_different_message(
 ) -> Message | None:
     """all-different因子から一つの変数へ送るメッセージを計算します。"""
     side = len(incoming)
-    outgoing = [0.0] * side
+    # 使用済みの数字集合をビットで表し、同じ集合に至る重みをまとめる。
+    states = {0: 1.0}
+    for position, weights in enumerate(incoming):
+        if position == target_position:
+            continue
+        following: dict[int, float] = {}
+        for mask, total in states.items():
+            for digit, weight in enumerate(weights):
+                bit = 1 << digit
+                if mask & bit or weight == 0.0:
+                    continue
+                new_mask = mask | bit
+                value = total * weight
+                if method == "sum-product":
+                    following[new_mask] = following.get(new_mask, 0.0) + value
+                else:
+                    following[new_mask] = max(following.get(new_mask, 0.0), value)
+        states = following
 
-    # 一つの順列が、因子を満たす数字の割り当て一通りに対応します。
-    for assignment in permutations(range(side)):
-        weight = prod(
-            incoming[position][assignment[position]]
-            for position in range(side)
-            if position != target_position
-        )
-        target_digit = assignment[target_position]
-        if method == "sum-product":
-            # 周囲の全割り当てから届く重みを足し合わせます。
-            outgoing[target_digit] += weight
-        else:
-            # 周囲の割り当てのうち、最大の重みだけを残します。
-            outgoing[target_digit] = max(outgoing[target_digit], weight)
-
-    return normalize(outgoing)
+    # 対象マスの数字だけが未使用となる集合の重みを取り出す。
+    full = (1 << side) - 1
+    return normalize([states.get(full ^ (1 << digit), 0.0) for digit in range(side)])
 # END article-factor-message
 
 
@@ -122,7 +125,7 @@ def decode(
 # BEGIN article-propagation
 def solve(
     board: Board,
-    method: Method = "sum-product",
+    method: Method = "max-product",
     *,
     max_iterations: int = 200,
     tolerance: float = 1e-10,
@@ -130,8 +133,6 @@ def solve(
     tie_tolerance: float = 1e-7,
 ) -> SolveResult:
     side, _ = board_geometry(board)
-    if side != 4:
-        raise ValueError("この実装は4×4数独だけを対象にします")
 
     # 行、列、ブロックを、それぞれ一つのall-different因子にします。
     factors = units(board)
@@ -288,7 +289,7 @@ def main() -> None:
     parser.add_argument(
         "--method",
         choices=("sum-product", "max-product"),
-        default="sum-product",
+        default="max-product",
     )
     parser.add_argument("--max-iterations", type=int, default=200)
     parser.add_argument("--tolerance", type=float, default=1e-10)

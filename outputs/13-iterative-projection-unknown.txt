@@ -4,5 +4,5 @@ beta: 0.5
 tolerance: 1e-08
 max_iterations: 2000
 iterations: 2000
-initial_residual: 1.6929291
-final_residual: 1.34338135
+initial_residual: 1.69227635
+final_residual: 1.16552723

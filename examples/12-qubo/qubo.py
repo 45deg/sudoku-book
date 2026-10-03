@@ -1,4 +1,4 @@
-"""4x4 Sudoku as a quadratic unconstrained binary optimization model."""
+"""9x9 Sudoku as a quadratic unconstrained binary optimization model."""
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ from typing import Iterable
 
 import dimod
 
-SIZE = 4
-BOX = 2
+SIZE = 9
+BOX = 3
 Board = tuple[int, ...]
 Variable = tuple[int, int, int]
 
@@ -46,13 +46,13 @@ def add_exactly_one(
 # BEGIN article-build-model
 def build_qubo(givens: Board, weight: float = 1.0) -> dimod.BinaryQuadraticModel:
     if len(givens) != SIZE * SIZE:
-        raise ValueError("この例は4×4数独だけを扱います")
+        raise ValueError("この例は9×9数独だけを扱います")
 
     linear: defaultdict[Variable, float] = defaultdict(float)
     quadratic: defaultdict[tuple[Variable, Variable], float] = defaultdict(float)
     offset = 0.0
 
-    # 各マスでは、四つの数字候補から一つだけを選ぶ。
+    # 各マスでは、九つの数字候補から一つだけを選ぶ。
     for row in range(SIZE):
         for column in range(SIZE):
             offset += add_exactly_one(
@@ -82,7 +82,7 @@ def build_qubo(givens: Board, weight: float = 1.0) -> dimod.BinaryQuadraticModel
                 weight,
             )
 
-    # 各2×2ブロックでも、それぞれの数字を一度だけ選ぶ。
+    # 各3×3ブロックでも、それぞれの数字を一度だけ選ぶ。
     for top in range(0, SIZE, BOX):
         for left in range(0, SIZE, BOX):
             for digit in range(1, SIZE + 1):
@@ -106,3 +106,28 @@ def build_qubo(givens: Board, weight: float = 1.0) -> dimod.BinaryQuadraticModel
 
     return dimod.BinaryQuadraticModel(linear, quadratic, offset, dimod.BINARY)
 # END article-build-model
+
+
+# BEGIN article-fixed-candidates
+def fixed_candidates(givens: Board) -> dict[Variable, int]:
+    fixed: dict[Variable, int] = {}
+    for row in range(SIZE):
+        for column in range(SIZE):
+            given = givens[row * SIZE + column]
+            top, left = row // BOX * BOX, column // BOX * BOX
+            used = set(givens[row * SIZE : (row + 1) * SIZE])
+            used.update(givens[column::SIZE])
+            used.update(
+                givens[r * SIZE + c]
+                for r in range(top, top + BOX)
+                for c in range(left, left + BOX)
+            )
+            for digit in range(1, SIZE + 1):
+                if given:
+                    # 初期配置のマスは、指定数字だけを1に固定する。
+                    fixed[variable(row, column, digit)] = int(digit == given)
+                elif digit in used:
+                    # 同じ行・列・ブロックの初期配置と衝突する候補は0にする。
+                    fixed[variable(row, column, digit)] = 0
+    return fixed
+# END article-fixed-candidates

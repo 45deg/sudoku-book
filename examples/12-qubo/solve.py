@@ -1,16 +1,16 @@
-"""Sample a 4x4 Sudoku QUBO with classical simulated annealing."""
+"""Sample a 9x9 Sudoku QUBO with classical simulated annealing."""
 
 from __future__ import annotations
 
 import argparse
 import sys
+from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
-import dimod
 import neal
 
-from qubo import Board, SIZE, build_qubo, variable
+from qubo import Board, SIZE, Variable, build_qubo, fixed_candidates, variable
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "examples" / "common"))
@@ -28,9 +28,10 @@ class SamplingResult:
     best_energy: float
     zero_energy_reads: int
     solutions: tuple[Board, ...]
+    sampled_variables: int
 
 
-def decode_sample(sample: dimod.SampleView) -> Board | None:
+def decode_sample(sample: Mapping[Variable, int]) -> Board | None:
     values: list[int] = []
     for row in range(SIZE):
         for column in range(SIZE):
@@ -48,6 +49,9 @@ def decode_sample(sample: dimod.SampleView) -> Board | None:
 # BEGIN article-sampling
 def sample_sudoku(givens: Board, *, seed: int, reads: int, sweeps: int) -> SamplingResult:
     bqm = build_qubo(givens)
+    fixed = fixed_candidates(givens)
+    # 固定値を代入し、一次・二次係数と定数項をまとめ直す。
+    bqm.fix_variables(fixed)
     sampler = neal.SimulatedAnnealingSampler()
 
     # 同じ乱数シード、読み出し回数、スイープ数なら実行条件を再現できる。
@@ -65,7 +69,9 @@ def sample_sudoku(givens: Board, *, seed: int, reads: int, sweeps: int) -> Sampl
             continue
         zero_energy_reads += datum.num_occurrences
 
-        board = decode_sample(datum.sample)
+        sample = dict(datum.sample)
+        sample.update(fixed)
+        board = decode_sample(sample)
         if board is None:
             continue
         valid, _ = validate_solution(board, givens)
@@ -79,6 +85,7 @@ def sample_sudoku(givens: Board, *, seed: int, reads: int, sweeps: int) -> Sampl
         best_energy=float(samples.first.energy),
         zero_energy_reads=zero_energy_reads,
         solutions=tuple(sorted(valid_boards)),
+        sampled_variables=len(bqm.variables),
     )
 # END article-sampling
 
@@ -98,6 +105,7 @@ def render_result(
         f"status: {result.status}",
         "sampler: neal.SimulatedAnnealingSampler",
         f"variables: {SIZE * SIZE * SIZE}",
+        f"sampled_variables: {result.sampled_variables}",
         f"seed: {seed}",
         f"reads: {reads}",
         f"sweeps: {sweeps}",
