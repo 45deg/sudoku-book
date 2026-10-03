@@ -232,7 +232,15 @@ Prologとの違い
 .. include:: ../examples/03-minikanren/puzzles/unsat-4x4.sdk
    :literal:
 
-``run`` が解を一つも返さずにストリームが終了するため、解なし（unsat）と判定されます。
+.. code-block:: console
+
+   $ uv run --frozen python examples/03-minikanren/solve.py \
+       examples/03-minikanren/puzzles/unsat-4x4.sdk --limit 2
+
+.. include:: ../outputs/03-minikanren-unsat.txt
+   :literal:
+
+``run`` が解を一つも返さずにストリームが終了するため、解なし（``unsat``）と判定します。
 
 解が複数ある問題
 ----------------
@@ -242,14 +250,23 @@ Prologとの違い
 .. include:: ../fixtures/shidoku-4x4.sdk
    :literal:
 
-二つの異なる盤面が得られた時点で一意解でないことが分かり、その後にストリームも終了するため、解は全部で二つであることが確認されます。
+.. code-block:: console
+
+   $ uv run --frozen python examples/03-minikanren/solve.py \
+       fixtures/shidoku-4x4.sdk --limit 2
+
+.. include:: ../outputs/03-minikanren-multiple.txt
+   :literal:
+
+二つの異なる盤面が得られた時点で一意解ではないことが分かり、その後にストリームも終了するため、
+解は全部で二つであることが確認できます。
 
 この方法で分かること
 ====================
 
-各単位を1から4の順列にする関係は、4×4数独の規則を記述しています。有効な完成盤面は
-すべてのゴールを満たし、ゴールを満たす16個の値の組は有効な完成盤面を構成します。探索空間が
-有限であるため、ストリームの全域探索により解なしと一意性を判定します。
+各単位を1から4の順列にする関係は、4×4数独の規則をそのまま記述しています。有効な完成盤面は
+すべてのゴールを満たし、ゴールを満たす16個の値の組は有効な完成盤面になります。探索空間が
+有限であるため、ストリームの全探索により解なしと一意性を判定できます。
 
 本実装は順列の直接列挙に依存し、制約伝播や有限領域制約を用いません。本章の4×4数独での
 検証は、遅延ストリームによる論理探索の動作確認を目的としています。
