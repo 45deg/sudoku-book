@@ -122,7 +122,6 @@ def decode(
     return solution, 0, None
 
 
-# BEGIN article-propagation
 def solve(
     board: Board,
     method: Method = "max-product",
@@ -262,7 +261,6 @@ def solve(
         )
     return SolveResult("solved", method, iteration, True, residual, ties, solution)
     # END article-decode
-# END article-propagation
 
 
 def describe_result(result: SolveResult) -> str:

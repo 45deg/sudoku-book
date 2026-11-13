@@ -59,9 +59,7 @@
 
 .. code-block:: console
 
-   $ UV_CACHE_DIR=.uv-cache uv run \
-       --with-requirements examples/09-asp/requirements.txt \
-       python examples/09-asp/choice.py
+   $ uv run --frozen python examples/09-asp/choice.py
 
 .. include:: ../outputs/09-asp-choice.txt
    :literal:
@@ -97,8 +95,9 @@ clingo内部では探索が行われますが、掲載コードが記述する�
 数独の候補と禁止条件を書く
 ============================
 
-数独のASPプログラムでは、行、列、数字を1から9までの事実として用意します。各マスの数字は、
-次のchoice ruleで一つだけ選びます。
+数独のASPプログラムでは、行、列、数字を1から9までの事実として用意します。コード先頭の
+``row(1..9).`` は、``row(1).`` から ``row(9).`` までの9個の事実をまとめて書く記法です。
+各マスの数字は、次のchoice ruleで一つだけ選びます。
 
 .. code-block:: prolog
 
@@ -128,11 +127,11 @@ clingo内部では探索が行われますが、掲載コードが記述する�
 groundしてからsolveする
 ==========================
 
-ソース中の ``R``、``C``、``D`` は変数ですが、clingoのsolverが直接この変数を割り当てるわけでは
-ありません。最初にgrounderが ``row(1..9)`` などの有限範囲を使い、変数を具体的な数字へ
-展開します。たとえば ``R=1, C=1`` については、``value(1,1,1)`` から ``value(1,1,9)`` までの
-九候補から一つを選ぶ規則になります。マスごとのchoice ruleは、このような基礎化された規則81個へ
-展開されます。
+clingoは、プログラム中の変数 ``R``、``C``、``D`` をまず具体的な定数へ置き換えてから探索を行います。
+このように変数を含まない規則へ展開する処理を **基礎化（grounding）** と呼び、clingo内部の
+grounderが担当します。``row(1..9)`` などの有限範囲を使い、たとえば ``R=1, C=1`` については、
+``value(1,1,1)`` から ``value(1,1,9)`` までの9候補から一つを選ぶ規則になります。マスごとの
+choice ruleは、基礎化された規則81個へ展開されます。
 
 groundingで得た変数のないプログラムを、solverが探索します。clingoはgrounderとsolverを統合した
 処理系で、Python APIから二段階を明示的に呼び出せます。Potasscoの処理系とASPによる宣言的な
@@ -143,9 +142,10 @@ groundingで得た変数のないプログラムを、solverが探索します�
    :start-after: # BEGIN article-clingo-runner
    :end-before: # END article-clingo-runner
 
-``control.add()`` は初期配置を数独規則と同じ ``base`` 部へ加えます。``ground()`` が規則を
-基礎化し、``solve(yield_=True)`` が安定モデルを順に返します。``#show value/3`` があるため、
-``model.symbols(shown=True)`` から盤面に必要な原子だけを取り出せます。clingoのガイドにも、
+``control.add()`` は、``given_facts(board)`` で作った初期配置の事実を数独規則と同じ ``base`` 部へ
+加えます。``ground()`` が規則を基礎化し、``solve(yield_=True)`` が安定モデルを順に返します。
+補助関数の ``board_from_model(model)`` では、``#show value/3`` で指定した表示対象の原子だけを
+``model.symbols(shown=True)`` で取り出し、81マスの盤面へ戻します。clingoのガイドにも、
 choice rule、整合性制約、groundingとsolveの例が掲載されています :cite:labelpar:`potassco2026guide`。
 
 実行と検証
@@ -188,7 +188,8 @@ choice rule、整合性制約、groundingとsolveの例が掲載されていま�
 対応します。clingoが全探索を終えた段階で、モデル数が0なら解なし、1なら
 一意解と判定します。二つのモデルが得られた時点で複数解と確定できます。
 
-``SolveResult.exhausted`` を確認しているため、モデル数の上限に達した場合と、全探索を終えた場合を
+探索終了後に ``handle.get()`` が返す ``result``（``SolveResult`` オブジェクト）の
+``result.exhausted`` を確認しているため、モデル数の上限に達した場合と、全探索を終えた場合を
 区別しています。実行時間の上限や割り込みは設定していません。掲載コードで ``unknown`` が
 返るのは、solverが充足可能性を決定できないまま終了した場合です。
 

@@ -52,10 +52,10 @@ def solve(board: Board, limit: int = 1) -> AspResult:
     control = clingo.Control(["--warn=none"])
     control.configuration.solve.models = limit
     control.load(str(PROGRAM))
-    # 初期配置をgiven/3の事実として、数独の規則と同じprogram partへ加える。
+    # 初期配置をgiven/3の事実として、数独の規則と同じprogram partへ加えます。
     control.add("base", [], given_facts(board))
 
-    # 変数を具体的な定数へ展開してから、安定モデルを探索する。
+    # 変数を具体的な定数へ展開してから、安定モデルを探索します。
     control.ground([("base", [])])
     solutions: list[Board] = []
     with control.solve(yield_=True) as handle:

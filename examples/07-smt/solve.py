@@ -67,12 +67,12 @@ def build_solver(board: Board):
 # END article-model
 
 
+# BEGIN article-enumeration
 def board_from_model(model, cells) -> Board:
     # 数学的な整数値を、共通盤面形式のPython整数へ変換します。
     return tuple(model.eval(cell).as_long() for row in cells for cell in row)
 
 
-# BEGIN article-enumeration
 def solve(board: Board, limit: int = 1) -> SolveResult:
     solver, cells = build_solver(board)
     solutions: list[Board] = []

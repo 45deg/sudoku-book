@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the small reachability model with nuXmv IC3."""
+"""Run the small reachability model with nuXmv BMC."""
 
 from __future__ import annotations
 

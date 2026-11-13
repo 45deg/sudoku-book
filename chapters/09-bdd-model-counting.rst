@@ -29,15 +29,15 @@
 
    破線は変数を0（偽）、実線は1（真）にした枝です。異なる枝が同じ終端を共有しています。
 
-丸は、そこに書かれた変数を調べる場所です。四角い0へ着けば式は偽、1へ着けば真です。
-たとえば :math:`x=1,y=1` なら1へ着きます。この経路では :math:`z` を調べません。結果に関係
+丸はそこに書かれた変数を調べる **非終端ノード**（決定ノード）で、下の四角い0と1は結果を表す **終端ノード** です。0終端へ着けば式は偽、1終端へ着けば真になります。
+たとえば :math:`x=1,y=1` なら1終端へ着きます。この経路では :math:`z` を調べません。結果に関係
 しないためです。したがって、この一本の経路は :math:`z=0` と :math:`z=1` の二つの割り当てを
 まとめて表しています。
 
-式を真にする部分経路は二本あります。
+論理式を真にする変数の割り当てを **モデル** と呼びます。この図で1終端へ着く経路は二本あります。
 
-* :math:`x=1,y=1` なら、:math:`z` は0と1のどちらでもよいため二モデルです。
-* :math:`x=0,z=1` なら、:math:`y` は0と1のどちらでもよいため二モデルです。
+* :math:`x=1,y=1` なら、:math:`z` は0と1のどちらでもよいため2通り（2モデル）です。
+* :math:`x=0,z=1` なら、:math:`y` は0と1のどちらでもよいため2通り（2モデル）です。
 
 合わせて :math:`2+2=4` モデルになります。
 
@@ -72,13 +72,12 @@ ROBDDの **順序付き** とは、根から終端へ向かうどの経路でも
 
 .. code-block:: console
 
-   $ uv run --with-requirements examples/10-bdd-model-counting/requirements.txt \
-       python examples/10-bdd-model-counting/small_bdd.py
+   $ uv run --frozen python examples/10-bdd-model-counting/small_bdd.py
 
 .. include:: ../outputs/10-bdd-model-counting-small.txt
    :literal:
 
-``x,y,z`` の順なら、図にある変数ノードは三つです。``y,z,x`` の順では四つに増えました。どちらも
+``x,y,z`` の順なら、図にある非終端ノード（``decision_nodes``）は三つです。``y,z,x`` の順では四つに増えました。どちらも
 同じ式を表すので、式を真にする割り当ての個数（モデル数）は四つのままです。三変数では小さな差ですが、変数が増えるとBDDの
 大きさが桁違いになることもあります。:cite:labelpar:`Bryant1992OBDD`
 
@@ -89,7 +88,7 @@ ROBDDの **順序付き** とは、根から終端へ向かうどの経路でも
 モデル数を数える
 ==================
 
-論理式を真にする変数の割り当てを **モデル** と呼び、その個数を求める問題を **モデル数え上げ**
+論理式を真にする割り当て（モデル）の個数を求める問題を **モデル数え上げ**
 と呼びます。命題論理式を対象にする場合は
 `#SAT <https://en.wikipedia.org/wiki/Sharp-SAT>`_ とも呼ばれます。SATが「一つ以上あるか」を
 答えるのに対し、#SATは「何個あるか」を答えます。:cite:labelpar:`Gomes2009ModelCounting`
@@ -161,7 +160,7 @@ BDDによる数え上げは、#SATという問題を別物に変えるわけで�
 今回の変数順では、``rules`` の根から到達できる非終端ノードは2,256個でした。空盤面の完成形は
 288個です。288盤面を別々に並べたものではなく、途中の選択を共有する一つのグラフになっています。
 
-空盤面について解数のみを確認した結果です。
+空盤面（``examples/10-bdd-model-counting/boards/empty-4x4.sdk``）に ``--limit 0`` を指定し、解数のみを確認した結果です。
 
 .. include:: ../outputs/10-bdd-model-counting-empty.txt
    :literal:
@@ -215,16 +214,39 @@ BDDによる数え上げは、#SATという問題を別物に変えるわけで�
 
 実行手順やオプションは :repo-file:`examples/10-bdd-model-counting/README.md` を参照してください。
 
-一意解問題（``examples/10-bdd-model-counting/boards/unique-4x4.sdk``）では、モデルカウント結果が1
-（``solution_count: 1``）となり、最初の解を除外して再探索することなく、BDDの構造から直接一意性が確定します。
+一意解問題
+----------
+
+入力は ``examples/10-bdd-model-counting/boards/unique-4x4.sdk`` です。リポジトリ直下で次を実行します。
+
+.. include:: ../examples/10-bdd-model-counting/boards/unique-4x4.sdk
+   :literal:
+
+.. code-block:: console
+
+   $ uv run --frozen python examples/10-bdd-model-counting/solve.py \
+       examples/10-bdd-model-counting/boards/unique-4x4.sdk --limit 2
+
+.. include:: ../outputs/10-bdd-model-counting-unique.txt
+   :literal:
+
+初期配置の6マスで絞り込むと、非終端ノード数（``query_nodes``）は2,256から64へ減りました。
+モデルカウント結果が1（``solution_count: 1``）となり、最初の解を除外して再探索することなく、
+BDDの構造から直接一意性が確定します。
+
+解がない問題
+------------
 
 矛盾問題（``examples/10-bdd-model-counting/boards/unsat-4x4.sdk``）では、論理式が恒偽（常に偽）になり、
-ROBDDが0終端ノードのみで構成されます。ノード数・モデル数がともに0になるため、制約を満たす割り当てが
-存在しない（解なし）と判定できます。
+ROBDDが0終端ノードのみで構成されます。非終端ノード数（``query_nodes``）とモデル数（``solution_count``）が
+ともに0になるため、制約を満たす割り当てが存在しない（解なし）と判定できます。
 
-複数解問題（``fixtures/shidoku-4x4.sdk``）では、モデルカウント結果が2（``solution_count: 2``）となり、
-解空間全体を数え上げた結果として正確に二つの解が存在することを確認できます。空盤面であれば、全解数288という
-値も同様に算出されます。
+解が複数ある問題
+----------------
+
+複数解問題（``fixtures/shidoku-4x4.sdk``）では、``query_nodes`` が117、モデルカウント結果が2
+（``solution_count: 2``）となり、解空間全体を数え上げた結果として正確に二つの解が存在することを
+確認できます。空盤面であれば、全解数288という値も同様に算出されます。
 
 この方法で分かること
 ======================

@@ -33,6 +33,7 @@ uv run --frozen python examples/10-bdd-model-counting/solve.py \
 
 | 問題 | 入力パス |
 | --- | --- |
+| 空盤面 | `examples/10-bdd-model-counting/boards/empty-4x4.sdk` |
 | 一意解 | `examples/10-bdd-model-counting/boards/unique-4x4.sdk` |
 | 解なし | `examples/10-bdd-model-counting/boards/unsat-4x4.sdk` |
 | 複数解 | `fixtures/shidoku-4x4.sdk` |

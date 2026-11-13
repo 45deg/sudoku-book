@@ -36,18 +36,23 @@
    :start-after: # BEGIN article-small-projections
    :end-before: # END article-small-projections
 
-:math:`P_A` と :math:`P_B` を順番に適用すると、点は次のように動きました。
+点 :math:`(2,1)` から始め、一回の反復で :math:`P_A` のあとに :math:`P_B` を適用します。
+
+.. include:: ../examples/13-iterative-projection/small_projection.py
+   :code: python
+   :start-after: # BEGIN article-alternating-projection
+   :end-before: # END article-alternating-projection
 
 .. code-block:: console
 
-   $ uv run --with-requirements examples/13-iterative-projection/requirements.txt \
-       python examples/13-iterative-projection/small_projection.py
+   $ uv run --frozen python examples/13-iterative-projection/small_projection.py
 
 .. include:: ../outputs/13-iterative-projection-small.txt
    :literal:
 
-一回目の交互射影後は :math:`(1,1)`、二回目は :math:`(0.5,0.5)` です。原点に向かって座標が半分ずつに
-なっています。これは二本の直線についての結果です。一般の閉凸集合にも交互射影の収束理論が
+一回目の反復では、まず :math:`P_A(2,1)=(2,0)` で :math:`x` 軸へ移り、続いて
+:math:`P_B(2,0)=(1,1)` で直線 :math:`y=x` 上へ移ります。二回目は :math:`(0.5,0.5)` です。
+原点に向かって座標が半分ずつになっています。これは二本の直線についての結果です。一般の閉凸集合にも交互射影の収束理論が
 ありますが、数独で使う「候補の一つだけが1」という集合は凸集合ではありません。候補0と候補1を
 結ぶ途中の点は、どちらの候補も0と1の間になり、数独の割り当てではないためです。非凸な集合では、
 同じ二つの射影を使っても交点へ収束する保証はありません。:cite:labelpar:`ChiLange2012SudokuProjection`
@@ -152,38 +157,38 @@
 二つの射影をDifference Mapで組み合わせる
 ================================================
 
-この実装では、単純に :math:`P_D` と :math:`P_C` を交互適用しません。現在の実数配列を
-:math:`x_k` とし、まず :math:`D` へ射影した点 :math:`d_k` を求めます。:math:`d_k` で
-:math:`x_k` を反射した点 :math:`2d_k-x_k` を :math:`C` へ射影し、:math:`c_k` とします。
-反射とは、:math:`d_k` を鏡の位置として、:math:`x_k` を反対側へ同じ距離だけ移す操作です。
+この実装では、単純に :math:`P_D` と :math:`P_C` を交互適用しません。第 :math:`t` 反復の実数配列全体を
+:math:`x^{(t)}` とし、まず :math:`D` へ射影した点 :math:`d^{(t)}` を求めます。:math:`d^{(t)}` で
+:math:`x^{(t)}` を反射した点 :math:`2d^{(t)}-x^{(t)}` を :math:`C` へ射影し、:math:`c^{(t)}` とします。
+反射とは、:math:`d^{(t)}` を鏡の位置として、:math:`x^{(t)}` を反対側へ同じ距離だけ移す操作です。
 
 .. math::
 
-   d_k=P_D(x_k), \qquad
-   c_k=P_C(2d_k-x_k)
+   d^{(t)}=P_D(x^{(t)}), \qquad
+   c^{(t)}=P_C(2d^{(t)}-x^{(t)})
 
 二つの射影結果の差を使い、次の配列を更新します。
 
 .. math::
 
-   x_{k+1}=x_k+\beta(c_k-d_k)
+   x^{(t+1)}=x^{(t)}+\beta(c^{(t)}-d^{(t)})
 
 これはDifference Mapの一形態で、relaxed reflect-reflect（RRR）とも呼ばれる更新です。
 Difference Mapは、単純な交互射影で起きる停滞への対処として設計されていますが、非凸問題で
 必ず交点を見つける保証はありません。:cite:labelpar:`Elser2003DifferenceMap`
 
-停止判定には、:math:`c_k` と :math:`d_k` の各要素の差のうち、絶対値が最大のものを使います。
-これをこの章の **残差** :math:`r_k` とします。
+停止判定には、:math:`c^{(t)}` と :math:`d^{(t)}` の各要素の差のうち、絶対値が最大のものを使います。
+これをこの章の **残差** とします。
 
 .. math::
 
-   r_k=\lVert c_k-d_k\rVert_\infty
+   \lVert c^{(t)}-d^{(t)}\rVert_\infty
 
-残差が0なら :math:`c_k=d_k` です。:math:`d_k` は局所制約を満たす集合 :math:`D` 上にあり、
-:math:`c_k` は四複製が合意する集合 :math:`C` 上にあります。二点が一致すれば、その点は
-:math:`D\cap C` に属し、局所規則と合意を同時に満たします。そこから完成盤面を取り出せます。
-計算機では丸め誤差があるため、
-``tolerance`` 以下で停止します。停止後にも盤面を共通検証器へ渡し、初期配置、行、列、ブロックを
+残差が0なら :math:`c^{(t)}=d^{(t)}` です。:math:`d^{(t)}` は局所制約を満たす集合 :math:`D` 上にあり、
+:math:`c^{(t)}` は四複製が合意する集合 :math:`C` 上にあります。二点が一致すれば、その点は
+:math:`D\cap C` に属し、局所規則と合意を同時に満たします。計算機では丸め誤差があるため、
+残差が ``tolerance`` 以下になった時点で停止し、``decode`` で四複製の平均から各マスで最大の候補を選んで
+盤面へ戻します。停止後にも盤面を共通検証器へ渡し、初期配置、行、列、ブロックを
 すべて満たす場合だけ ``solved`` とします。
 
 .. include:: ../examples/13-iterative-projection/solve.py
@@ -229,7 +234,9 @@ Difference Mapは、単純な交互射影で起きる停滞への対処として
 結果は ``unknown`` です。指定条件で交点を見つけられなかっただけでは、交点が存在しないとは
 証明できません。解がある盤面でも、初期値や反復上限によっては ``unknown`` になります。
 
-また、複数解を持つ問題で一解が得られても、Difference Mapの一回の試行だけではほかの解の有無や一意性を確定できません。連続空間での反復探索は解を列挙しないためです。
+また、複数解問題 ``fixtures/multiple-9x9.sdk`` では ``--seed 2 --max-iterations 2000`` で
+105反復後に一解が得られますが、Difference Mapの一回の試行だけではほかの解の有無や一意性を確定できません。
+連続空間での反復探索は解を列挙しないためです。
 
 この方法で分かること
 ======================

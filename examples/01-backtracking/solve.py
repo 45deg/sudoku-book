@@ -146,9 +146,11 @@ class PropagationContext:
     solutions: list[Board]
 
 
+# BEGIN article-propagate
 def eliminate(
     context: PropagationContext, state: list[int], position: int, bit: int
 ) -> bool:
+    """指定した候補ビットを除き、裸のシングルと隠れたシングルを伝播する。"""
     if not state[position] & bit:
         return True
 
@@ -156,13 +158,16 @@ def eliminate(
     context.stats.eliminations += 1
     remaining = state[position]
     if remaining == 0:
+        # 候補が空になったため、この分岐では完成できない。
         return False
 
+    # 裸のシングル：残る候補が一つだけなら、同じ行・列・ブロックからその数字を除く。
     if remaining.bit_count() == 1:
         for peer in context.peers[position]:
             if not eliminate(context, state, peer, remaining):
                 return False
 
+    # 隠れたシングル：同じ単位内でその数字を置ける場所が一つだけなら確定する。
     for unit in context.units_by_position[position]:
         places = [cell for cell in unit if state[cell] & bit]
         if not places:
@@ -172,7 +177,6 @@ def eliminate(
     return True
 
 
-# BEGIN article-propagate
 def assign(
     context: PropagationContext, state: list[int], position: int, bit: int
 ) -> bool:

@@ -33,9 +33,11 @@ Z3の論理式を作ります。
    :start-after: # BEGIN article-small-example
    :end-before: # END article-small-example
 
-``solver.add()`` で論理式を追加し、``check()`` で式を同時に満たす値があるか調べます。結果は
-``sat``、``unsat``、``unknown`` のいずれかです。``sat`` なら、条件を満たす値の割り当てを
-``model()`` から読めます。:cite:labelpar:`z3guideBasicCommands`
+``Ints("x y")`` で二つの整数変数 ``x`` と ``y`` を作り、``SolverFor("QF_LIA")`` で整数算術用の
+ソルバーを用意します（``QF_LIA`` の意味は後述します）。``solver.add()`` で論理式を追加し、
+``check()`` で式を同時に満たす値があるか調べます。結果は ``sat``、``unsat``、``unknown`` の
+いずれかです。``sat`` なら ``solver.model()`` でモデルを取り出し、``model.eval(x).as_long()`` で
+Z3の整数値をPythonの ``int`` に変換して読み出せます。:cite:labelpar:`z3guideBasicCommands`
 
 .. include:: ../outputs/07-smt-small-example.txt
    :literal:
@@ -104,8 +106,9 @@ SMTでは、左上のマスを一つの整数変数 :math:`x_{1,1}` として宣
    :start-after: # BEGIN article-model
    :end-before: # END article-model
 
-``Distinct`` の意味は、任意の二マス :math:`i,j` について :math:`i\ne j` なら
-:math:`x_i\ne x_j` とすることです。第5章「制約プログラミング」の ``all_different`` と直観的には類似しますが、
+``Distinct`` に同じ行・列・ブロックの9個の変数 :math:`y_1,\ldots,y_9` を渡したときの意味は、その中の
+任意の二つ :math:`i,j`（:math:`1\le i<j\le 9`）について :math:`y_i\ne y_j` とすることです。
+第5章「制約プログラミング」の ``all_different`` と直観的には類似しますが、
 ここでは整数項に対する論理式を構成しており、CPソルバーのグローバル制約と同じ伝播アルゴリズムの
 適用を指示するものではありません。
 
@@ -118,8 +121,9 @@ Quantifier-Free（量化子なし）、LIAはLinear Integer Arithmetic（線形�
 モデルから完成盤面を読み戻す
 ==============================
 
-``check()`` が ``sat`` を返したら、``solver.model()`` でモデルを得ます。各 ``cell`` をモデルの
-もとで評価し、Z3の整数値を ``as_long()`` でPythonの整数へ変換して完成盤面を復元します。
+``check()`` が ``sat`` を返したら、``solver.model()`` でモデルを得ます。補助関数の
+``board_from_model()`` では、81個の各変数 ``cell`` を ``model.eval(cell).as_long()`` で
+Pythonの整数へ変換して完成盤面を復元します。
 復元した盤面は共通検証器へ渡し、初期配置、行、列、ブロックを改めて確認します。
 
 一意性を調べるには、最初のモデルと異なるモデルをもう一度探します。最初の完成盤面を
@@ -129,7 +133,8 @@ Quantifier-Free（量化子なし）、LIAはLinear Integer Arithmetic（線形�
 
    \bigvee_{r,c} x_{r,c} \ne m_{r,c}
 
-どこか少なくとも一マスが最初の盤面と異なる、という式です。この式を加えて ``check()`` し、
+どこか少なくとも一マスが最初の盤面と異なる、という式です。コードではZ3Pyの ``Or(...)`` に
+81マスの不等式のリストを渡してこの論理和を作ります。この式を加えて ``check()`` し、
 二つ目も ``sat`` なら複数解です。``unsat`` なら、最初の盤面以外に解はありません。
 
 .. include:: ../examples/07-smt/solve.py
@@ -144,8 +149,10 @@ Z3の結果は三通りに分けます。``unknown`` は、Z3が ``sat`` と ``u
 実行と検証
 ============
 
-実行手順とオプションは :repo-file:`examples/07-smt/README.md` にまとめています。最初のモデルを得た後、
-そのモデルを除外してもう一度Z3へ問い合わせた結果を含めると、三問の出力は次のようになります。
+実行手順とオプションは :repo-file:`examples/07-smt/README.md` にまとめています。一意解問題
+（``fixtures/standard-9x9.sdk``）、矛盾問題（``fixtures/unsat-9x9.sdk``）、複数解問題
+（``fixtures/multiple-9x9.sdk``）の三つについて、別解の有無まで確認した結果（最大二解まで探索、
+矛盾問題は ``--limit 1``）は次のとおりです。
 
 .. list-table:: Z3で三つの盤面を調べた結果
    :header-rows: 1
@@ -173,7 +180,9 @@ Z3の結果は三通りに分けます。``unknown`` は、Z3が ``sat`` と ``u
      - ``no``
 
 一意解問題では、最初のモデルを除外した二回目の問い合わせが ``unsat`` になりました。
-``search_complete: yes`` は、その問い合わせが最終判定まで終わったことを示します。複数解問題では
+``search_complete: yes`` は、その問い合わせが最終判定まで終わったことを示します。矛盾問題では
+初回の ``check()`` で ``unsat`` が返るため、その時点で探索が完了（``search_complete: yes``）し、
+一意性の判定は対象外（出力上は ``not-applicable``）となります。複数解問題では
 二回目も ``sat`` となり、共通検証器を通る異なる二盤面が得られました。二解で打ち切るため
 ``search_complete`` は ``no`` ですが、一意解でないことの判定には十分です。
 

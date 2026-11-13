@@ -41,7 +41,7 @@
 
   <path d="M445 124 L445 181" class="arrow" data-connector="確定値を伝播"/>
   <text x="465" y="154" class="small">B = 2 が確定</text>
-  <text x="465" y="174" class="small">同じ単位のAとCから2を除く</text>
+  <text x="465" y="174" class="small">同じ行のAとCから2を除く</text>
 
   <text x="28" y="231" class="label">伝播後</text>
   <g transform="translate(145 202)">
